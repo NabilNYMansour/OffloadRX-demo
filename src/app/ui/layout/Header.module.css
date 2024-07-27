@@ -1,0 +1,52 @@
+.rootHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: rem(70px);
+}
+
+.header {
+  background-color: light-dark(#fff, #242424);
+  box-shadow: 0 0 0.1em rgba(0, 0, 0, 0.5);
+}
+
+.inner {
+  height: rem(70px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.appTitle {
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.appTitle:hover {
+  scale: 1.1;
+}
+
+.appTitle div {
+  transition: all 0.2s ease-in-out;
+}
+
+.appTitle svg {
+  transition: all 0.2s ease-in-out;
+}
+
+.appTitle:hover div {
+  color: light-dark(black, white);
+}
+
+.appTitle:hover svg {
+  color: light-dark(black, white);
+}

@@ -1,0 +1,22 @@
+.body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: visible;
+}
+
+.app {
+  padding-top: 70px;
+  flex-grow: 1;
+  display: flex;
+}
+
+.notifications {
+  position: fixed;
+  top: 80px;
+  right: 0;
+  width: fit-content;
+  height: fit-content;
+  z-index: 5000;
+}
