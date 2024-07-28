@@ -2,7 +2,7 @@ var fs = require('fs');
 var { parse } = require('csv-parse');
 const { drizzle } = require('drizzle-orm/better-sqlite3');
 const Database = require('better-sqlite3');
-const { integer, sqliteTable, text } = require('drizzle-orm/sqlite-core');
+const { integer, real, sqliteTable, text } = require('drizzle-orm/sqlite-core');
 const { faker } = require('@faker-js/faker');
 const { exit } = require('process');
 
@@ -37,7 +37,7 @@ const medicineTable = sqliteTable('users', {
   city: text('city').notNull(), // City
   street: text('street').notNull(), // Street
   zip: text('zip').notNull(), // Zip
-  price: text('price').notNull(), // Price
+  price: real('price').notNull(), // Price
   expiry: text('expiry').notNull(), // Expiry
   lotNumber: text('lot_number').notNull(), // Lot Number
   datePosted: text('date_posted').notNull(), // Date Posted
@@ -58,11 +58,7 @@ fs.createReadStream("./data/Medicine_Details.csv")
     const street = faker.location.streetAddress();
     const letters = makeid(3);
     const zip = faker.location.zipCode(letters[0] + "#" + letters[1] + " #" + letters[2] + "#");
-    const price = faker.commerce.price({
-      min: 50,
-      max: 5000,
-      symbol: "$",
-    });
+    const price = Math.floor(Math.random() * (5000 - 50 + 1)) + 50;
     const expiry = "EXP" + formatMonthYear(faker.date.future({ years: 3 }));
     const lotNumber = "LOT#" + faker.location.zipCode("#####");
     const datePosted = faker.date.past({ years: 1 }).toISOString();

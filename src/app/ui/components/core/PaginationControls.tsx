@@ -11,7 +11,7 @@ const PaginationControls = ({ currentPage, numberOfPages }: { currentPage: numbe
 
   const handlePageChange = (newPage: number, scroll: boolean) => {
     const params = new URLSearchParams(searchParams);
-    params.set('page', Math.min(Math.max(newPage, 1), numberOfPages).toString()); // minimum of 1 and maximum of numberOfPages
+    params.set('page', Math.max(Math.min(newPage, numberOfPages), 1).toString()); // minimum of 1 and maximum of numberOfPages
     replace(`${pathname}?${params.toString()}`, { scroll });
   }
 

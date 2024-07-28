@@ -1,4 +1,4 @@
-import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 export const medicineTable = sqliteTable('users', {
   id: integer('id').primaryKey(),
@@ -8,7 +8,7 @@ export const medicineTable = sqliteTable('users', {
   city: text('city').notNull(), // City
   street: text('street').notNull(), // Street
   zip: text('zip').notNull(), // Zip
-  price: text('price').notNull(), // Price
+  price: real('price').notNull(), // Price
   expiry: text('expiry').notNull(), // Expiry
   lotNumber: text('lot_number').notNull(), // Lot Number
   datePosted: text('date_posted').notNull(), // Date Posted

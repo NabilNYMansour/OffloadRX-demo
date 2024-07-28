@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "1a927bbc-4890-4c44-a8f2-268f5a73965a",
+  "id": "032ad212-d4e0-443b-bc52-6a91e4002c88",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "users": {
@@ -58,7 +58,7 @@
         },
         "price": {
           "name": "price",
-          "type": "text",
+          "type": "real",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
