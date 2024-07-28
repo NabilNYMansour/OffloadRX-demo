@@ -8,11 +8,11 @@ import { useDebouncedValue, useDisclosure, useMediaQuery } from '@mantine/hooks'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { FaMagnifyingGlass, FaSort } from 'react-icons/fa6';
 import { RxCross1 } from "react-icons/rx";
-import { IoFilterSharp, IoSettingsSharp } from "react-icons/io5";
+import { IoSettingsSharp } from "react-icons/io5";
 import classes from '../core.module.css';
 import cx from 'clsx';
-import Filters from "../Filters";
-import AdvancedSearch from "../AdvancedSearch";
+import { AdvancedSearchDynamic } from "../AdvancedSearch";
+import { FiltersDynamic } from "../Filters";
 
 const SearchSkeleton = () => {
   return (
@@ -101,9 +101,9 @@ const Search = ({ count }: { count: number }) => {
         title="Filters and Advanced Search"
         opened={modalOpened} onClose={modalActions.close}>
         <Flex direction="column" gap={10} align="center">
-          <Filters />
+          <FiltersDynamic />
           <Divider w="100%" mt={10} mb={10} />
-          <AdvancedSearch />
+          <AdvancedSearchDynamic />
         </Flex>
       </Modal>
 

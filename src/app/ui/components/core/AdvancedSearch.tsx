@@ -41,7 +41,7 @@ const CustomSearchInput = ({ title, placeholderTitle, icon }:
 
 const AdvancedSearchSkeleton = () => {
   return (
-    <Skeleton radius="md" h={400} w={258} className={classes.slideUp} />
+    <Skeleton radius="md" h={390} w="100%" />
   );
 }
 
@@ -49,7 +49,7 @@ const AdvancedSearch = () => {
   const [value, setValue] = useState<Date | null>(null);
 
   return (
-    <Flex direction="column" w="100%" className={classes.slideUp}>
+    <Flex direction="column" w="100%">
 
       <Group justify='space-between'>
         <Title order={5}>Advanced Search</Title>
@@ -87,7 +87,28 @@ const AdvancedSearch = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(AdvancedSearch), {
+const AdvancedSearchCard = () => {
+  return (
+    <Card className={classes.slideUp} w={300} shadow="sm" radius="md" padding="lg" withBorder>
+      <AdvancedSearch />
+    </Card>
+  );
+}
+
+const AdvancedSearchSkeletonCard = () => {
+  return (
+    <Card className={classes.slideUp} w={300} shadow="sm" radius="md" padding="lg" withBorder>
+      <AdvancedSearchSkeleton />
+    </Card>
+  );
+}
+
+export const AdvancedSearchDynamic = dynamic(() => Promise.resolve(AdvancedSearch), {
   ssr: false,
   loading: () => <AdvancedSearchSkeleton />
+});
+
+export const AdvancedSearchWrapped = dynamic(() => Promise.resolve(AdvancedSearchCard), {
+  ssr: false,
+  loading: () => <AdvancedSearchSkeletonCard />
 });

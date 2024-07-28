@@ -11,14 +11,14 @@ import { useState } from "react";
 
 const FiltersSkeleton = () => {
   return (
-    <Skeleton radius="md" h={400} w={258} className={classes.slideUp} />
+    <Skeleton radius="md" h={459} w="100%" />
   );
 }
 
 const Filters = () => {
   const [offloadType, setOffloadType] = useState<string>("all");
   return (
-    <Flex direction="column" className={classes.slideUp}>
+    <Flex direction="column">
       <Group justify='space-between'>
         <Title order={5}>Filters</Title>
         <Button
@@ -36,8 +36,7 @@ const Filters = () => {
       <Radio.Group
         name="favoriteFramework"
         value={offloadType}
-        onChange={setOffloadType}
-      >
+        onChange={setOffloadType}>
         <Flex gap={10} direction="column">
           <Radio value="all" label="All" />
           <Radio value="wo" label="Wanted only" />
@@ -77,7 +76,28 @@ const Filters = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(Filters), {
+const FiltersCard = () => {
+  return (
+    <Card className={classes.slideUp} w={300} shadow="sm" radius="md" padding="lg" withBorder>
+      <Filters />
+    </Card>
+  );
+}
+
+const FiltersSkeletonCard = () => {
+  return (
+    <Card className={classes.slideUp} w={300} shadow="sm" radius="md" padding="lg" withBorder>
+      <FiltersSkeleton />
+    </Card>
+  );
+}
+
+export const FiltersDynamic = dynamic(() => Promise.resolve(Filters), {
   ssr: false,
   loading: () => <FiltersSkeleton />
+});
+
+export const FiltersWrapped = dynamic(() => Promise.resolve(FiltersCard), {
+  ssr: false,
+  loading: () => <FiltersSkeletonCard />
 });

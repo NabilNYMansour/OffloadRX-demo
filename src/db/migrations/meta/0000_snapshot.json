@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "032ad212-d4e0-443b-bc52-6a91e4002c88",
+  "id": "4ac1849e-440e-4b4e-8cb9-9848f15291d2",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "users": {
@@ -35,6 +35,20 @@
           "notNull": true,
           "autoincrement": false
         },
+        "price": {
+          "name": "price",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "for_sale": {
+          "name": "for_sale",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "city": {
           "name": "city",
           "type": "text",
@@ -56,29 +70,22 @@
           "notNull": true,
           "autoincrement": false
         },
-        "price": {
-          "name": "price",
-          "type": "real",
+        "date_posted": {
+          "name": "date_posted",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "expiry": {
           "name": "expiry",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
         "lot_number": {
           "name": "lot_number",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "date_posted": {
-          "name": "date_posted",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

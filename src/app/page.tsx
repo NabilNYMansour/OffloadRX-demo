@@ -7,8 +7,8 @@ import CenterContainer from "./ui/components/core/CenterContainer";
 import { MdOutlineSearchOff } from "react-icons/md";
 import Search from "./ui/components/core/search/Search";
 import classes from './page.module.css';
-import Filters from "./ui/components/core/Filters";
-import AdvancedSearch from "./ui/components/core/AdvancedSearch";
+import { AdvancedSearchWrapped } from "./ui/components/core/AdvancedSearch";
+import { FiltersWrapped } from "./ui/components/core/Filters";
 
 const noPostsFound = () => {
   return <Card shadow="sm" padding="lg" radius="md" withBorder>
@@ -34,9 +34,7 @@ export default async function HomePage({ searchParams }: { searchParams: SearchP
 
       <Box flex={1} className={classes.filters}>
         <Flex w="100%" pl={10} direction="column" align="flex-end">
-          <Card className={classes.slideUp} w={300} shadow="sm" radius="md" padding="lg" withBorder>
-            <Filters />
-          </Card>
+          <FiltersWrapped />
         </Flex>
       </Box>
 
@@ -60,9 +58,7 @@ export default async function HomePage({ searchParams }: { searchParams: SearchP
 
       <Box flex={1} className={classes.filters}>
         <Flex w="100%" pr={10} direction="column" align="flex-start">
-          <Card className={classes.slideUp} w={300} shadow="sm" radius="md" padding="lg" withBorder>
-            <AdvancedSearch />
-          </Card>
+          <AdvancedSearchWrapped />
         </Flex>
       </Box>
     </Flex>
