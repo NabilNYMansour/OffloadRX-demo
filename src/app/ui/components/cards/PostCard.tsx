@@ -1,13 +1,15 @@
 "use client";
 
-import { ActionIcon, AspectRatio, Box, Card, Container, Divider, Flex, Group, Loader, NumberFormatter, Skeleton, Text, Title } from '@mantine/core';
-import React, { use, useEffect, useState } from 'react';
+import { ActionIcon, Card, Divider, Flex, Group, NumberFormatter, Skeleton, Text, Title } from '@mantine/core';
+import { useState } from 'react';
 import classes from './PostCard.module.css';
 import { Image } from '@mantine/core';
 import { SelectMedicine } from '@/db/schema';
 import dynamic from 'next/dynamic';
-import { FaRegStar, FaStar } from 'react-icons/fa6';
+import { FaRegStar, FaStar, FaTag } from 'react-icons/fa6';
 import { notifications } from '@mantine/notifications';
+import { isFavourite, toggleFavourite } from '@/app/utils/helper';
+import { MdHandshake } from 'react-icons/md';
 
 const size = 250;
 
@@ -27,6 +29,12 @@ const agoCalculator = (days: number) => {
   }
 }
 
+const formatExpiry = (date: Date) => {
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = String(date.getFullYear()).slice(-2);
+  return `${month}/${year}`;
+}
+
 export const PostCardSkeleton = () => { // Skeleton will not have favourite button
   return (
     <Card miw="100%" className={classes.postCard} shadow="sm" radius="md" padding="lg" withBorder>
@@ -44,34 +52,33 @@ export const PostCardSkeleton = () => { // Skeleton will not have favourite butt
 }
 
 const PostCard = ({ post }: { post: SelectMedicine }) => {
-  const [loaded, setLoaded] = React.useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   const [datePosted] = useState<Date>(new Date(post.datePosted));
   const [postedAgoString] = useState<string>(
     agoCalculator(Math.floor((new Date().getTime() - datePosted.getTime()) / (1000 * 60 * 60 * 24)))
   );
 
-  const [isFavourite, setIsFavourite] = useState(localStorage.getItem(post.slug) !== null);
+  const [isFavourited, setIsFavourited] = useState(isFavourite(post.id));
 
   const handleFavourite = () => {
-    if (!isFavourite) { // not favourited so add to favourites
+    if (!isFavourited) { // not favourited
       notifications.show({
         title: <Flex align="center" gap={5}>
           Added to favourites ⭐
         </Flex>,
         message: '"' + post.name + '" is added to your favourites.',
       });
-      localStorage.setItem(post.slug, JSON.stringify("1")); // store in local storage (only care about key not value)
-    } else { // was favourited so remove from favourites
+    } else { // was favourited
       notifications.show({
         title: <Flex align="center" gap={5}>
           Removed from favourites ⭐
         </Flex>,
         message: '"' + post.name + '" is removed from your favourites.',
       });
-      localStorage.removeItem(post.slug);
     }
-    setIsFavourite(!isFavourite);
+    toggleFavourite(post.id);
+    setIsFavourited(!isFavourited);
   }
 
   return (
@@ -93,13 +100,21 @@ const PostCard = ({ post }: { post: SelectMedicine }) => {
 
         {/*============= Text =============*/}
         <Flex direction="column" w="100%">
-          <Title lineClamp={1} c="main">
-            <NumberFormatter prefix="$ " value={post.price} thousandSeparator />
-          </Title>
+          <Group gap={10}>
+            <Text fw={700} c="main">{post.forSale ?
+              <span><FaTag />Selling for</span> :
+              <span><MdHandshake />Wanted for</span>
+            }
+            </Text>
+            <Title lineClamp={1} c="main">
+              <NumberFormatter prefix="$ " value={post.price} thousandSeparator />
+            </Title>
+          </Group>
+
           <Text size='xl' fw={900} lineClamp={1} span>{post.name}</Text>
           <Text size='md' fw={900} c="dimmed" lineClamp={2}>{post.composition}</Text>
           <Group>
-            <Text size='sm' c="red" span>{post.expiry}</Text>
+            <Text size='sm' c="red" span>{formatExpiry(post.expiry)}</Text>
             <Divider orientation='vertical' />
             <Text size='sm' c="dimmed" span>{post.lotNumber}</Text>
           </Group>
@@ -118,7 +133,7 @@ const PostCard = ({ post }: { post: SelectMedicine }) => {
         m={5} pos="absolute" right={0} top={0}
         onClick={handleFavourite} radius="xl" size="lg"
         variant='subtle' aria-label='add to favourite'>
-        {isFavourite ? <FaStar size={25} /> : <FaRegStar size={25} />}
+        {isFavourited ? <FaStar size={25} /> : <FaRegStar size={25} />}
       </ActionIcon>
     </Card >
   );

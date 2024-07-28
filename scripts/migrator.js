@@ -45,12 +45,6 @@ function randomCapitalString(length) { // Capitalized only
   return result;
 }
 
-// function formatMonthYear(date) {
-//   const month = String(date.getMonth() + 1).padStart(2, '0');
-//   const year = String(date.getFullYear()).slice(-2);
-//   return `${month}/${year}`;
-// }
-
 console.log("\n============== Migrator ==============");
 
 console.log("migrator> Creating db connection");
@@ -65,12 +59,14 @@ const medicineTable = sqliteTable('users', {
   composition: text('composition').notNull(), // Composition
 
   imgUrl: text('imgUrl').notNull(), // Image URL
-  price: real('price'), // Price (can be null where if null you put 'Please Contact')
+  price: real('price').notNull(), // Price
   forSale: integer('for_sale', { mode: 'boolean' }).notNull(), // For Sale 1 for sale, 0 for wanted
 
   city: text('city').notNull(), // City
   street: text('street').notNull(), // Street
   zip: text('zip').notNull(), // Zip
+  phoneNumber: text('phone_number').notNull(), // Phone Number
+  email: text('email').notNull(), // Email
 
   datePosted: integer('date_posted', { mode: 'timestamp' }).notNull(), // Date Posted
 
@@ -78,7 +74,7 @@ const medicineTable = sqliteTable('users', {
   lotNumber: text('lot_number').notNull(), // Lot Number
 
   description: text('description').notNull(), // Description
-  slug: text('slug').notNull(), // Slug,
+  slug: text('slug').notNull(), // Slug
 });
 
 console.log("migrator> started reading");
@@ -91,17 +87,15 @@ fs.createReadStream("./data/Medicine_Details.csv")
     const composition = row[1];
 
     const imgUrl = row[4];
-    let price = Math.floor(Math.random() * (5000 - 50 + 1)) + 50;
-    if (Math.random() < 0.05) {
-      price = null;
-    }
-
+    const price = Math.floor(Math.random() * (5000 - 50 + 1)) + 50;
     const forSale = Math.floor(Math.random() * 2);
 
     const city = randomCityInOntario();
     const street = faker.location.streetAddress();
     const zip = faker.location.zipCode(randomCapitalString(1) + "#" + randomCapitalString(1) + " #" + randomCapitalString(1) + "#");
-    
+    const phoneNumber = faker.helpers.fromRegExp("[1-9][0-9]{2}-[0-9]{3}-[0-9]{4}");
+    const email = faker.internet.email();
+
     const datePosted = faker.date.past({ years: 1 });
     
     const expiry = faker.date.future({ years: 3 });
@@ -121,6 +115,8 @@ fs.createReadStream("./data/Medicine_Details.csv")
       city,
       street,
       zip,
+      phoneNumber,
+      email,
       
       datePosted,
       

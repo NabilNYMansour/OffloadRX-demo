@@ -3,11 +3,16 @@
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import classes from './core.module.css';
-import { ActionIcon, Button, Card, Checkbox, Flex, Group, NumberInput, Radio, Skeleton, Text, Title } from "@mantine/core";
+import { Button, Card, Checkbox, Flex, Group, NumberInput, Radio, Skeleton, Text, Title } from "@mantine/core";
 import dynamic from "next/dynamic";
 import { GrPowerReset } from "react-icons/gr";
 import { DatePickerInput } from '@mantine/dates';
 import { useState } from "react";
+import {  FaCalendarDays, FaStar, FaTag } from 'react-icons/fa6';
+import { MdDateRange, MdHandshake } from 'react-icons/md';
+import { OffloadRX } from '../../icons/custom';
+import { HiCurrencyDollar } from "react-icons/hi";
+import { FaCalendarTimes, FaRegCalendarTimes } from "react-icons/fa";
 
 const FiltersSkeleton = () => {
   return (
@@ -27,25 +32,35 @@ const Filters = () => {
         </Button>
       </Group>
 
-      <Text pt={10} size="xl">Favourites</Text>
+      {/*============= Favourites =============*/}
+      <Group align='center' gap={5} pt={10}>
+        <Text size="xl">Favourites</Text>
+        <FaStar />
+      </Group>
       <Checkbox
         label="Favourites only" />
 
-      <Text pt={10} size="xl">Offload Type</Text>
-
+      {/*============= Offload Type =============*/}
+      <Group align='center' gap={5} pt={10}>
+        <Text size="xl">Offload Type</Text>
+        <OffloadRX size={20} />
+      </Group>
       <Radio.Group
         name="favoriteFramework"
         value={offloadType}
         onChange={setOffloadType}>
         <Flex gap={10} direction="column">
-          <Radio value="all" label="All" />
-          <Radio value="wo" label="Wanted only" />
-          <Radio value="fso" label="For Sale only" />
+          <Radio value="all" label={<span>All</span>} />
+          <Radio value="fso" label={<span><FaTag />Selling only</span>} />
+          <Radio value="wo" label={<span><MdHandshake />Wanted only</span>} />
         </Flex>
       </Radio.Group>
 
-
-      <Text pt={10} size="xl">Price</Text>
+      {/*============= Price =============*/}
+      <Group align='center' gap={5} pt={10}>
+        <Text size="xl">Price</Text>
+        <HiCurrencyDollar />
+      </Group>
       <Flex gap={10}>
         <NumberInput
           placeholder="Min"
@@ -61,13 +76,21 @@ const Filters = () => {
         />
       </Flex>
 
-      <Text pt={10} size="xl">Date Posted</Text>
+      {/*============= Date Posted =============*/}
+      <Group align='center' gap={5} pt={10}>
+        <Text size="xl">Date Posted</Text>
+        <FaCalendarDays />
+      </Group>
       <DatePickerInput
         type="range"
         placeholder="Pick Post dates range"
       />
 
-      <Text pt={10} size="xl">Expiry</Text>
+      {/*============= Expiry =============*/}
+      <Group align='center' gap={5} pt={10}>
+        <Text size="xl">Expiry</Text>
+        <FaCalendarTimes />
+      </Group>
       <DatePickerInput
         type="range"
         placeholder="Pick Expiry dates range"

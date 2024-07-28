@@ -11,13 +11,17 @@ const PaginationControls = ({ currentPage, numberOfPages }: { currentPage: numbe
 
   const handlePageChange = (newPage: number, scroll: boolean) => {
     const params = new URLSearchParams(searchParams);
-    params.set('page', Math.max(Math.min(newPage, numberOfPages), 1).toString()); // minimum of 1 and maximum of numberOfPages
+    if (newPage === 1) {
+      params.delete('page');
+    } else {
+      params.set('page', Math.max(Math.min(newPage, numberOfPages), 1).toString()); // minimum of 1 and maximum of numberOfPages
+    }
     replace(`${pathname}?${params.toString()}`, { scroll });
   }
 
-  useEffect(() => {
-    handlePageChange(currentPage, false);
-  });
+  // useEffect(() => {
+  //   handlePageChange(currentPage, false);
+  // });
 
   return <Pagination.Root
     disabled={numberOfPages === 0} total={numberOfPages} value={currentPage}

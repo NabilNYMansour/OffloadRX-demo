@@ -1,7 +1,7 @@
 "use client";
 
-import { Button, Divider, Flex, Group, Modal, Select, Skeleton, Text, ThemeIcon } from "@mantine/core";
-import { use, useEffect, useState } from "react";
+import { Divider, Flex, Group, Modal, Select, Skeleton, Text, ThemeIcon } from "@mantine/core";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { ActionIcon, TextInput } from '@mantine/core';
 import { useDebouncedValue, useDisclosure, useMediaQuery } from '@mantine/hooks';
@@ -23,6 +23,40 @@ const SearchSkeleton = () => {
   );
 }
 
+function getSortValue(key: string): string {
+  switch (key) {
+    case "Best Match":
+      return "";
+    case "Price: Lowest":
+      return "price";
+    case "Price: Highest":
+      return "-price";
+    case "Time: Oldest":
+      return "datePosted";
+    case "Time: Newest":
+      return "-datePosted";
+    default:
+      return "";
+  }
+}
+
+function getSortKey(value: string): string {
+  switch (value) {
+    case "":
+      return "Best Match";
+    case "price":
+      return "Price: Lowest";
+    case "-price":
+      return "Price: Highest";
+    case "datePosted":
+      return "Time: Oldest";
+    case "-datePosted":
+      return "Time: Newest";
+    default:
+      return "Best Match";
+  }
+}
+
 const availableSortValues = [
   "Best Match",
   "Price: Lowest",
@@ -39,7 +73,7 @@ const Search = ({ count }: { count: number }) => {
 
   const [searchValue, setSearchValue] = useState<string>(searchParams.get("search") ?? "");
   const [debouncedSearchValue] = useDebouncedValue(searchValue, 500);
-  const [sortValue, setSortValue] = useState<string | null>(searchParams.get("sort"));
+  const [sortValue, setSortValue] = useState<string>(getSortKey(searchParams.get("sort") ?? ""));
 
   const [modalOpened, modalActions] = useDisclosure(false);
 
@@ -69,37 +103,29 @@ const Search = ({ count }: { count: number }) => {
   //============= Search side effect =============//
   useEffect(() => {
     handleSearch(debouncedSearchValue);
-  }, [debouncedSearchValue]);
+  }, [debouncedSearchValue, handleSearch]);
 
   //============= Sort side effect =============//
   useEffect(() => {
     if (sortValue) {
-      switch (sortValue) {
-        case "Price: Lowest":
-          handleSort("price");
-          break;
-        case "Price: Highest":
-          handleSort("-price");
-          break;
-        case "Time: Oldest":
-          handleSort("datePosted");
-          break;
-        case "Time: Newest":
-          handleSort("-datePosted");
-          break;
-        default:
-          handleSort("");
-          break
-      }
+      handleSort(getSortValue(sortValue));
     }
-  }, [sortValue]);
+  }, [sortValue, handleSort]);
+
+  //============= Small Screen side effect =============//
+  useEffect(() => {
+    if (!screenSmall) {
+      modalActions.close();
+    }
+  }, [screenSmall, modalActions]);
 
   return (
     <>
       {/*============= Advanced Search and Filters Modal =============*/}
       <Modal
         title="Filters and Advanced Search"
-        opened={modalOpened} onClose={modalActions.close}>
+        opened={modalOpened && screenSmall ? screenSmall : false}
+        onClose={modalActions.close}>
         <Flex direction="column" gap={10} align="center">
           <FiltersDynamic />
           <Divider w="100%" mt={10} mb={10} />
@@ -151,8 +177,8 @@ const Search = ({ count }: { count: number }) => {
             <Select size="sm" radius="md"
               w={150}
               data={availableSortValues}
-              onChange={(value) => setSortValue(value)}
-              defaultValue="Best Match"
+              onChange={(value) => setSortValue(value ?? "")}
+              defaultValue={sortValue}
               comboboxProps={{
                 transitionProps: { transition: 'pop', duration: 200 },
                 shadow: 'xl',
