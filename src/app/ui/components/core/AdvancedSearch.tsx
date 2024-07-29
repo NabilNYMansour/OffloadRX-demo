@@ -3,17 +3,14 @@
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import classes from './core.module.css';
-import { ActionIcon, Button, Card, Divider, Flex, Group, NumberInput, Skeleton, Text, TextInput, Title } from "@mantine/core";
+import { ActionIcon, Button, Card, Flex, Group, Skeleton, TextInput, Title } from "@mantine/core";
 import dynamic from "next/dynamic";
 import { GrPowerReset } from "react-icons/gr";
-import { DateInput, DatePickerInput } from '@mantine/dates';
 import React, { useState } from "react";
-import { FaCity, FaHashtag, FaLocationDot, FaMagnifyingGlass } from 'react-icons/fa6';
+import { FaCity, FaHashtag, FaLocationDot } from 'react-icons/fa6';
 import { RxCross1 } from 'react-icons/rx';
-import { IconType } from 'react-icons/lib';
 import { MdDriveFileRenameOutline } from 'react-icons/md';
 import { GiChemicalDrop } from "react-icons/gi";
-import { useMediaQuery } from '@mantine/hooks';
 
 const CustomSearchInput = ({ title, placeholderTitle, icon }:
   { title: string, placeholderTitle: string, icon: React.ReactNode }
@@ -41,7 +38,7 @@ const CustomSearchInput = ({ title, placeholderTitle, icon }:
 
 const AdvancedSearchSkeleton = () => {
   return (
-    <Skeleton radius="md" h={390} w="100%" />
+    <Skeleton radius="md" h={478} w="100%" />
   );
 }
 
@@ -51,13 +48,14 @@ const AdvancedSearch = () => {
   return (
     <Flex direction="column" w="100%">
 
-      <Group justify='space-between'>
-        <Title order={5}>Advanced Search</Title>
+      <Flex direction="column">
+        <Title order={1} ta="center">Advanced Search</Title>
         <Button
+          variant='light'
           leftSection={<GrPowerReset />}>
-          Reset
+          Reset Advanced Search
         </Button>
-      </Group>
+      </Flex>
 
       <CustomSearchInput
         title="Name"

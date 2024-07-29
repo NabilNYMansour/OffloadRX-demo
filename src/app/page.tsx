@@ -1,4 +1,6 @@
-import { Box, Card, Flex, Group, Skeleton, Title } from "@mantine/core";
+"use server";
+
+import { Box, Card, Flex, Group, Title } from "@mantine/core";
 import PostCard from "./ui/components/cards/PostCard";
 import PaginationControls from "./ui/components/core/PaginationControls";
 import { SearchParams } from "@/lib/types";
@@ -34,7 +36,7 @@ export default async function HomePage({ searchParams }: { searchParams: SearchP
 
       <Box flex={1} className={classes.filters}>
         <Flex w="100%" pl={10} direction="column" align="flex-end">
-          <FiltersWrapped />
+          <FiltersWrapped key={"cardFilter"} />
         </Flex>
       </Box>
 
@@ -58,7 +60,7 @@ export default async function HomePage({ searchParams }: { searchParams: SearchP
 
       <Box flex={1} className={classes.filters}>
         <Flex w="100%" pr={10} direction="column" align="flex-start">
-          <AdvancedSearchWrapped />
+          <AdvancedSearchWrapped key={"cardAdvanced"} />
         </Flex>
       </Box>
     </Flex>

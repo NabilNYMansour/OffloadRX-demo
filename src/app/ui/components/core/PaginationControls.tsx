@@ -19,9 +19,9 @@ const PaginationControls = ({ currentPage, numberOfPages }: { currentPage: numbe
     replace(`${pathname}?${params.toString()}`, { scroll });
   }
 
-  // useEffect(() => {
-  //   handlePageChange(currentPage, false);
-  // });
+  useEffect(() => {
+    handlePageChange(currentPage, false);
+  });
 
   return <Pagination.Root
     disabled={numberOfPages === 0} total={numberOfPages} value={currentPage}

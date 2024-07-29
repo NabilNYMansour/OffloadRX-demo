@@ -69,12 +69,12 @@ const Search = ({ count }: { count: number }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const screenSmall = useMediaQuery('(max-width: 1400px)'); // same in @/app/page.module.css
 
   const [searchValue, setSearchValue] = useState<string>(searchParams.get("search") ?? "");
   const [debouncedSearchValue] = useDebouncedValue(searchValue, 500);
   const [sortValue, setSortValue] = useState<string>(getSortKey(searchParams.get("sort") ?? ""));
 
+  const screenSmall = useMediaQuery('(max-width: 1400px)'); // same in @/app/page.module.css
   const [modalOpened, modalActions] = useDisclosure(false);
 
 
@@ -103,14 +103,14 @@ const Search = ({ count }: { count: number }) => {
   //============= Search side effect =============//
   useEffect(() => {
     handleSearch(debouncedSearchValue);
-  }, [debouncedSearchValue, handleSearch]);
+  }, [debouncedSearchValue]);
 
   //============= Sort side effect =============//
   useEffect(() => {
     if (sortValue) {
       handleSort(getSortValue(sortValue));
     }
-  }, [sortValue, handleSort]);
+  }, [sortValue]);
 
   //============= Small Screen side effect =============//
   useEffect(() => {
@@ -160,8 +160,7 @@ const Search = ({ count }: { count: number }) => {
             <ActionIcon size="lg"
               aria-label="Filter posts"
               className={cx(classes.filterButton, classes.slideUp)}
-              onClick={modalActions.open}
-              variant="light">
+              onClick={modalActions.open}>
               <IoSettingsSharp />
             </ActionIcon> :
             <Text c="dimmed" fs="italic"

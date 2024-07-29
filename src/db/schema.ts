@@ -7,7 +7,7 @@ export const medicineTable = sqliteTable('users', {
   composition: text('composition').notNull(), // Composition
 
   imgUrl: text('imgUrl').notNull(), // Image URL
-  price: real('price').notNull(), // Price
+  price: real('price'), // Price
   forSale: integer('for_sale', { mode: 'boolean' }).notNull(), // For Sale 1 for sale, 0 for wanted
 
   city: text('city').notNull(), // City

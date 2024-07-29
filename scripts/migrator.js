@@ -59,7 +59,7 @@ const medicineTable = sqliteTable('users', {
   composition: text('composition').notNull(), // Composition
 
   imgUrl: text('imgUrl').notNull(), // Image URL
-  price: real('price').notNull(), // Price
+  price: real('price'), // Price
   forSale: integer('for_sale', { mode: 'boolean' }).notNull(), // For Sale 1 for sale, 0 for wanted
 
   city: text('city').notNull(), // City
@@ -87,7 +87,11 @@ fs.createReadStream("./data/Medicine_Details.csv")
     const composition = row[1];
 
     const imgUrl = row[4];
-    const price = Math.floor(Math.random() * (5000 - 50 + 1)) + 50;
+    let price = Math.floor(Math.random() * (5000 - 50 + 1)) + 50;
+    if (Math.random() < 0.05) {
+      price = null;
+    }
+
     const forSale = Math.floor(Math.random() * 2);
 
     const city = randomCityInOntario();

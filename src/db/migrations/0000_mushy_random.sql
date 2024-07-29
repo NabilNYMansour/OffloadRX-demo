@@ -3,7 +3,7 @@ CREATE TABLE `users` (
 	`name` text NOT NULL,
 	`composition` text NOT NULL,
 	`imgUrl` text NOT NULL,
-	`price` real NOT NULL,
+	`price` real,
 	`for_sale` integer NOT NULL,
 	`city` text NOT NULL,
 	`street` text NOT NULL,

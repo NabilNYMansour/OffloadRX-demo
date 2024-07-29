@@ -101,20 +101,23 @@ const PostCard = ({ post }: { post: SelectMedicine }) => {
         {/*============= Text =============*/}
         <Flex direction="column" w="100%">
           <Group gap={10}>
-            <Text fw={700} c="main">{post.forSale ?
-              <span><FaTag />Selling for</span> :
-              <span><MdHandshake />Wanted for</span>
+            <Text fw={700} lineClamp={1} c="main">{post.forSale ?
+              <span><FaTag />Selling for:</span> :
+              <span><MdHandshake />Wanted for:</span>
             }
             </Text>
-            <Title lineClamp={1} c="main">
-              <NumberFormatter prefix="$ " value={post.price} thousandSeparator />
+            <Title order={post.price ? 1 : 3} lineClamp={1} c={post.price ? "main" : "dimmed"}>
+              {post.price ?
+                <NumberFormatter prefix="$ " value={post.price} thousandSeparator /> :
+                "Please Contact"
+              }
             </Title>
           </Group>
 
           <Text size='xl' fw={900} lineClamp={1} span>{post.name}</Text>
           <Text size='md' fw={900} c="dimmed" lineClamp={2}>{post.composition}</Text>
           <Group>
-            <Text size='sm' c="red" span>{formatExpiry(post.expiry)}</Text>
+            <Text size='sm' c="red" span>{"EXP" + formatExpiry(post.expiry)}</Text>
             <Divider orientation='vertical' />
             <Text size='sm' c="dimmed" span>{post.lotNumber}</Text>
           </Group>
