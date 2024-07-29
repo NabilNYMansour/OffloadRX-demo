@@ -9,10 +9,11 @@ import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { FaMagnifyingGlass, FaSort } from 'react-icons/fa6';
 import { RxCross1 } from "react-icons/rx";
 import { IoSettingsSharp } from "react-icons/io5";
-import classes from './core.module.css';
+import classes from '@/app/core.module.css';
 import cx from 'clsx';
 import { AdvancedSearchDynamic } from "./AdvancedSearch";
 import { FiltersDynamic } from "./Filters";
+import { cookies } from 'next/headers'
 
 const SearchSkeleton = () => {
   return (
@@ -76,7 +77,6 @@ const Search = ({ count }: { count: number }) => {
 
   const screenSmall = useMediaQuery('(max-width: 1400px)'); // same in @/app/page.module.css
   const [modalOpened, modalActions] = useDisclosure(false);
-
 
   //============= Search url param =============//
   function handleSearch(term: string) {

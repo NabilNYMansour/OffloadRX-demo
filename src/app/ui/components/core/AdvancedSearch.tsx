@@ -2,7 +2,7 @@
 
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
-import classes from './core.module.css';
+import classes from '@/app/core.module.css';
 import { ActionIcon, Button, Card, Flex, Group, Skeleton, TextInput, Title } from "@mantine/core";
 import dynamic from "next/dynamic";
 import { GrPowerReset } from "react-icons/gr";
@@ -55,8 +55,7 @@ const canReset = (searchParams: URLSearchParams) => {
 const AdvancedSearch = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const router = useRouter();
-  const { replace } = router;
+  const { replace } = useRouter();
 
   const [nameValue, setNameValue] = useState<string>(searchParams.get("name") ?? "");
   const [debouncedNameValue] = useDebouncedValue(nameValue, 500);
@@ -140,11 +139,9 @@ const AdvancedSearch = () => {
 
   return (
     <Flex direction="column" w="100%">
-
       <Flex direction="column">
         <Title order={1} ta="center">Advanced Search</Title>
         <Button
-          variant='light'
           disabled={!canReset(searchParams)}
           onClick={resetAdvancedSearch}
           leftSection={<GrPowerReset />}>

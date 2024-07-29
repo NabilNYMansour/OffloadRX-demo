@@ -2,7 +2,7 @@
 
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
-import classes from './core.module.css';
+import classes from '@/app/core.module.css';
 import { Button, Card, Checkbox, Flex, Group, NumberInput, Radio, Skeleton, Text, Title } from "@mantine/core";
 import dynamic from "next/dynamic";
 import { GrPowerReset } from "react-icons/gr";
@@ -18,7 +18,7 @@ import { useIsVisible } from '@/app/utils/hooks';
 
 const FiltersSkeleton = () => {
   return (
-    <Skeleton radius="md" h={503} w="100%" />
+    <Skeleton radius="md" h={440} w="100%" />
   );
 }
 
@@ -28,7 +28,7 @@ const postedRangeInit = (searchParams: ReadonlyURLSearchParams) => {
   if (searchSplit && searchSplit.length === 2) {
     prInit = [new Date(searchSplit[0]), new Date(searchSplit[1])];
   }
-  return prInit
+  return prInit;
 }
 
 const expiryRangeInit = (searchParams: ReadonlyURLSearchParams) => {
@@ -37,11 +37,11 @@ const expiryRangeInit = (searchParams: ReadonlyURLSearchParams) => {
   if (searchSplit && searchSplit.length === 2) {
     erInit = [new Date(searchSplit[0]), new Date(searchSplit[1])];
   }
-  return erInit
+  return erInit;
 }
 
 const canReset = (searchParams: ReadonlyURLSearchParams) => {
-  return searchParams.get("fo") || searchParams.get("type") || searchParams.get("pf") || searchParams.get("pt") || searchParams.get("pr") || searchParams.get("er");
+  return searchParams.get("type") || searchParams.get("pf") || searchParams.get("pt") || searchParams.get("pr") || searchParams.get("er");
 }
 
 const Filters = () => {
@@ -49,7 +49,6 @@ const Filters = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const [favouritesOnly, setFavouritesOnly] = useState<string>(searchParams.get("fo") ?? "");
   const [offloadType, setOffloadType] = useState<string>(searchParams.get("type") ?? "all");
 
   const [priceFrom, setPriceFrom] = useState<string | number>(searchParams.get("pf") ?? '');
@@ -63,7 +62,6 @@ const Filters = () => {
 
   const resetFilters = () => {
     const params = new URLSearchParams(searchParams);
-    params.delete('fo');
     params.delete('type');
     params.delete('pf');
     params.delete('pt');
@@ -73,7 +71,6 @@ const Filters = () => {
   }
 
   const initFilters = () => {
-    setFavouritesOnly(searchParams.get("fo") ?? "");
     setOffloadType(searchParams.get("type") ?? "all");
 
     const pf = searchParams.get("pf");
@@ -98,20 +95,6 @@ const Filters = () => {
     initFilters();
   }, [isVisible, searchParams]);
 
-  //============= Favourites only url param =============//
-  function handleFavouritesOnly(term: string) {
-    const params = new URLSearchParams(searchParams);
-    if (term) {
-      params.set('fo', term);
-    } else {
-      params.delete('fo');
-    }
-    replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }
-  useEffect(() => {
-    handleFavouritesOnly(favouritesOnly);
-  }, [favouritesOnly]);
-
   //============= Offload type url param =============//
   function handleOffloadType(term: string) {
     const params = new URLSearchParams(searchParams);
@@ -126,60 +109,41 @@ const Filters = () => {
     handleOffloadType(offloadType);
   }, [offloadType]);
 
-  //============= Price from url param =============//
-  function handlePriceFrom(term: number | string) {
+  //============= Price url param =============//
+  function handlePriceChange(term: number | string, paramName: string) {
     const params = new URLSearchParams(searchParams);
     if (term !== "") {
-      params.set('pf', term.toString());
+      params.set(paramName, term.toString());
     } else {
-      params.delete('pf');
+      params.delete(paramName);
     }
     replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
   useEffect(() => {
-    handlePriceFrom(priceFrom);
+    handlePriceChange(priceFrom, "pf");
   }, [priceFrom]);
 
-  //============= Price to url param =============//
-  function handlePriceTo(term: number | string) {
-    const params = new URLSearchParams(searchParams);
-    if (term !== "") {
-      params.set('pt', term.toString());
-    } else {
-      params.delete('pt');
-    }
-    replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }
   useEffect(() => {
-    handlePriceTo(priceTo);
+    handlePriceChange(priceTo, "pt");
   }, [priceTo]);
 
-  //============= Posted range url param =============//
-  function handlePostedRange(term: [Date | null, Date | null]) {
+  //============= Range url param =============//
+  function handleRange(term: [Date | null, Date | null], paramName: string) {
     const params = new URLSearchParams(searchParams);
     if (term[0] && term[1]) {
-      params.set('pr', term.map(date => date?.toLocaleDateString()).join(','));
+      params.set(paramName, term.map(date => date?.toLocaleDateString()).join(','));
     } else {
-      params.delete('pr');
+      params.delete(paramName);
     }
     replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
+
   useEffect(() => {
-    handlePostedRange(postedRange);
+    handleRange(postedRange, 'pr');
   }, [postedRange]);
 
-  //============= Expiry range url param =============//
-  function handleExpiryRange(term: [Date | null, Date | null]) {
-    const params = new URLSearchParams(searchParams);
-    if (term[0] && term[1]) {
-      params.set('er', term.map(date => date?.toLocaleDateString()).join(','));
-    } else {
-      params.delete('er');
-    }
-    replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }
   useEffect(() => {
-    handleExpiryRange(expiryRange);
+    handleRange(expiryRange, 'er');
   }, [expiryRange]);
 
   return (
@@ -188,23 +152,12 @@ const Filters = () => {
       <Flex direction="column">
         <Title order={1} ta="center">Filters</Title>
         <Button
-          variant='light'
           disabled={!canReset(searchParams)}
           onClick={resetFilters}
           leftSection={<GrPowerReset />}>
           Reset Filters
         </Button>
       </Flex>
-
-      {/*============= Favourites =============*/}
-      <Group align='center' gap={5} pt={10}>
-        <Text size="xl">Favourites</Text>
-        <FaStar />
-      </Group>
-      <Checkbox
-        onChange={(event) => setFavouritesOnly(event.currentTarget.checked ? "1" : "")}
-        checked={favouritesOnly === "1"}
-        label="Favourites only" />
 
       {/*============= Offload Type =============*/}
       <Group align='center' gap={5} pt={10}>
