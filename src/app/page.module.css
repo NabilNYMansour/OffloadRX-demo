@@ -1,9 +1,0 @@
-.filters {
-  display: block;
-}
-
-@media (max-width: 1400px) {
-  .filters {
-    display: none;
-  }
-}

@@ -1,14 +1,17 @@
 "use server";
 
-import { asc, count, desc, eq, like, or } from 'drizzle-orm';
+import { and, asc, between, count, desc, eq, gt, gte, like, lte, or, sql } from 'drizzle-orm';
 import { medicineTable, SelectMedicine } from './schema';
 import { db } from '.';
+import { AdvancedSearchParams, FiltersParams, GeneralParams } from '@/lib/types';
+import { fi } from '@faker-js/faker';
 
 export async function getMedicineById(id: SelectMedicine['id']) {
   return db.select().from(medicineTable).where(eq(medicineTable.id, id))
 }
 
-const getAllWhereFunc = (searchTerm: string) => or(
+//================== General Search ==================//
+const whereFunc = (searchTerm: string) => or(
   like(medicineTable.name, `%${searchTerm}%`),
   like(medicineTable.composition, `%${searchTerm}%`),
   like(medicineTable.city, `%${searchTerm}%`),
@@ -18,21 +21,113 @@ const getAllWhereFunc = (searchTerm: string) => or(
   like(medicineTable.lotNumber, `%${searchTerm}%`),
 )
 
-export async function getAllMedicine(searchTerm: string, sort: string, page: number, limit: number) {
-  const actualPage = Math.max(page - 1, 0);
-
-  return await db.select().from(medicineTable)
-    .where(getAllWhereFunc(searchTerm)).orderBy(
-      sort === 'price' ? asc(medicineTable.price) :
-        sort === '-price' ? desc(medicineTable.price) :
-          sort === 'datePosted' ? asc(medicineTable.datePosted) :
-            sort === '-datePosted' ? desc(medicineTable.datePosted) :
-              asc(medicineTable.id)
-    ).limit(limit).offset(actualPage * limit);
+//================== Filters ==================//
+const forSaleFunc = (type: string) => {
+  const forSale = type === "selling" ? true : type === "wanted" ? false : null;
+  if (forSale !== null) {
+    return (eq(medicineTable.forSale, forSale));
+  } else {
+    return or();
+  }
 }
 
-export async function getMedicineCount(searchTerm: string) {
-  return await
-    db.select({ count: count() }).from(medicineTable)
-      .where(getAllWhereFunc(searchTerm));
+const priceFunc = (priceFrom: string, priceTo: string) => {
+  if (priceFrom && priceTo) {
+    return between(medicineTable.price, Number(priceFrom), Number(priceTo));
+  } else if (priceFrom) {
+    return gte(medicineTable.price, Number(priceFrom));
+  } else if (priceTo) {
+    return lte(medicineTable.price, Number(priceTo));
+  } else {
+    return or();
+  }
+}
+
+const postedRangeFunc = (pr: string) => {
+  if (pr) {
+    const [from, to] = pr.split(",");
+    return between(medicineTable.datePosted, new Date(from), new Date(to));
+  } else {
+    return or();
+  }
+}
+
+const expiryRangeFunc = (er: string) => {
+  if (er) {
+    const [from, to] = er.split(",");
+    return between(medicineTable.expiry, new Date(from), new Date(to));
+  } else {
+    return or();
+  }
+}
+
+const filtersFunc = (filtersParams: FiltersParams) => {
+  return and(
+    forSaleFunc(filtersParams.type),
+    priceFunc(filtersParams.pf, filtersParams.pt),
+    postedRangeFunc(filtersParams.pr),
+    expiryRangeFunc(filtersParams.er),
+  )
+}
+
+//================== Advanced Search ==================//
+const advancedSearchFunc = (advancedSearchParams: AdvancedSearchParams) => {
+  return and(
+    like(medicineTable.name, `%${advancedSearchParams.name}%`),
+    like(medicineTable.composition, `%${advancedSearchParams.composition}%`),
+    like(medicineTable.city, `%${advancedSearchParams.city}%`),
+    like(medicineTable.zip, `%${advancedSearchParams.zip}%`),
+    like(medicineTable.lotNumber, `%${advancedSearchParams.lot}%`),
+  )
+}
+
+//================== Sorting ==================//
+const orderByFunc = (sort: string) => {
+  switch (sort) {
+    case "price":
+      return asc(medicineTable.price);
+    case "-price":
+      return desc(medicineTable.price);
+    case "datePosted":
+      return asc(medicineTable.datePosted);
+    case "-datePosted":
+      return desc(medicineTable.datePosted);
+    default:
+      return asc(medicineTable.id);
+  }
+}
+
+export async function getAllMedicine(
+  generalParams: GeneralParams,
+  filtersParams: FiltersParams,
+  advancedSearchParams: AdvancedSearchParams,
+  limit: number
+) {
+  const actualPage = Math.max(generalParams.page - 1, 0);
+
+  return await db.select().from(medicineTable)
+    .where(
+      and(
+        whereFunc(generalParams.search),
+        filtersFunc(filtersParams),
+        advancedSearchFunc(advancedSearchParams)
+      )
+    )
+    .orderBy(orderByFunc(generalParams.sort))
+    .limit(limit).offset(actualPage * limit);
+}
+
+export async function getMedicineCount(
+  generalParams: GeneralParams,
+  filtersParams: FiltersParams,
+  advancedSearchParams: AdvancedSearchParams,
+) {
+  return await db.select({ count: count() }).from(medicineTable)
+    .where(
+      and(
+        whereFunc(generalParams.search),
+        filtersFunc(filtersParams),
+        advancedSearchFunc(advancedSearchParams)
+      )
+    )
 }

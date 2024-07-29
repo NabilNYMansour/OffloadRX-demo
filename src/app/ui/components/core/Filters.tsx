@@ -75,8 +75,20 @@ const Filters = () => {
   const initFilters = () => {
     setFavouritesOnly(searchParams.get("fo") ?? "");
     setOffloadType(searchParams.get("type") ?? "all");
-    setPriceFrom(searchParams.get("pf") ?? '');
-    setPriceTo(searchParams.get("pt") ?? '');
+
+    const pf = searchParams.get("pf");
+    if (pf === "" || pf === null) {
+      setPriceFrom('');
+    } else {
+      setPriceFrom(parseFloat(pf));
+    }
+    const pt = searchParams.get("pt");
+    if (pt === "" || pt === null) {
+      setPriceTo('');
+    } else {
+      setPriceTo(parseFloat(pt));
+    }
+
     setPostedRange(postedRangeInit(searchParams));
     setExpiryRange(expiryRangeInit(searchParams));
   }
@@ -89,50 +101,86 @@ const Filters = () => {
   //============= Favourites only url param =============//
   function handleFavouritesOnly(term: string) {
     const params = new URLSearchParams(searchParams);
-    if (term) params.set('fo', term);
-    else params.delete('fo');
+    if (term) {
+      params.set('fo', term);
+    } else {
+      params.delete('fo');
+    }
     replace(`${pathname}?${params.toString()}`, { scroll: false });
-  } useEffect(() => handleFavouritesOnly(favouritesOnly), [favouritesOnly]);
+  }
+  useEffect(() => {
+    handleFavouritesOnly(favouritesOnly);
+  }, [favouritesOnly]);
 
   //============= Offload type url param =============//
   function handleOffloadType(term: string) {
     const params = new URLSearchParams(searchParams);
-    if (term !== "all") params.set('type', term);
-    else params.delete('type')
+    if (term !== "all") {
+      params.set('type', term);
+    } else {
+      params.delete('type');
+    }
     replace(`${pathname}?${params.toString()}`, { scroll: false });
-  } useEffect(() => handleOffloadType(offloadType), [offloadType]);
+  }
+  useEffect(() => {
+    handleOffloadType(offloadType);
+  }, [offloadType]);
 
   //============= Price from url param =============//
   function handlePriceFrom(term: number | string) {
     const params = new URLSearchParams(searchParams);
-    if (term !== "") params.set('pf', term.toString());
-    else params.delete('pf');
+    if (term !== "") {
+      params.set('pf', term.toString());
+    } else {
+      params.delete('pf');
+    }
     replace(`${pathname}?${params.toString()}`, { scroll: false });
-  } useEffect(() => handlePriceFrom(priceFrom), [priceFrom]);
+  }
+  useEffect(() => {
+    handlePriceFrom(priceFrom);
+  }, [priceFrom]);
 
   //============= Price to url param =============//
   function handlePriceTo(term: number | string) {
     const params = new URLSearchParams(searchParams);
-    if (term !== "") params.set('pt', term.toString());
-    else params.delete('pt');
+    if (term !== "") {
+      params.set('pt', term.toString());
+    } else {
+      params.delete('pt');
+    }
     replace(`${pathname}?${params.toString()}`, { scroll: false });
-  } useEffect(() => handlePriceTo(priceTo), [priceTo]);
+  }
+  useEffect(() => {
+    handlePriceTo(priceTo);
+  }, [priceTo]);
 
   //============= Posted range url param =============//
   function handlePostedRange(term: [Date | null, Date | null]) {
     const params = new URLSearchParams(searchParams);
-    if (term[0] && term[1]) params.set('pr', term.map(date => date?.toLocaleDateString()).join(','));
-    else params.delete('pr');
+    if (term[0] && term[1]) {
+      params.set('pr', term.map(date => date?.toLocaleDateString()).join(','));
+    } else {
+      params.delete('pr');
+    }
     replace(`${pathname}?${params.toString()}`, { scroll: false });
-  } useEffect(() => handlePostedRange(postedRange), [postedRange]);
+  }
+  useEffect(() => {
+    handlePostedRange(postedRange);
+  }, [postedRange]);
 
   //============= Expiry range url param =============//
   function handleExpiryRange(term: [Date | null, Date | null]) {
     const params = new URLSearchParams(searchParams);
-    if (term[0] && term[1]) params.set('er', term.map(date => date?.toLocaleDateString()).join(','));
-    else params.delete('er');
+    if (term[0] && term[1]) {
+      params.set('er', term.map(date => date?.toLocaleDateString()).join(','));
+    } else {
+      params.delete('er');
+    }
     replace(`${pathname}?${params.toString()}`, { scroll: false });
-  } useEffect(() => handleExpiryRange(expiryRange), [expiryRange]);
+  }
+  useEffect(() => {
+    handleExpiryRange(expiryRange);
+  }, [expiryRange]);
 
   return (
     <Flex direction="column" ref={ref}>
@@ -183,16 +231,14 @@ const Filters = () => {
         <NumberInput
           placeholder="Min"
           prefix="$"
-          allowNegative={false}
-          decimalScale={2}
           value={priceFrom}
+          min={0}
           onChange={setPriceFrom} />
         <NumberInput
           placeholder="Max"
           prefix="$"
-          allowNegative={false}
-          decimalScale={2}
           value={priceTo}
+          min={0}
           onChange={setPriceTo} />
       </Flex>
 

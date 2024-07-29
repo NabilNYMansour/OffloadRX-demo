@@ -14,3 +14,13 @@
   animation: slideUp 0.25s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
+
+.bigScreen {
+  display: block;
+}
+
+@media (max-width: 1400px) {
+  .bigScreen {
+    display: none;
+  }
+}

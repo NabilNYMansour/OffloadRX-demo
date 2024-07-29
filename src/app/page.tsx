@@ -1,68 +1,47 @@
 "use server";
 
-import { Box, Card, Flex, Group, Title } from "@mantine/core";
-import PostCard from "./ui/components/cards/PostCard";
-import PaginationControls from "./ui/components/core/PaginationControls";
-import { SearchParams } from "@/lib/types";
+import { AdvancedSearchParams, FiltersParams, GeneralParams, SearchParams } from "@/lib/types";
 import { getAllMedicine, getMedicineCount } from "@/db/queries";
-import CenterContainer from "./ui/components/core/CenterContainer";
-import { MdOutlineSearchOff } from "react-icons/md";
-import Search from "./ui/components/core/search/Search";
-import classes from './page.module.css';
-import { AdvancedSearchWrapped } from "./ui/components/core/AdvancedSearch";
-import { FiltersWrapped } from "./ui/components/core/Filters";
-
-const noPostsFound = () => {
-  return <Card shadow="sm" padding="lg" radius="md" withBorder>
-    <Group justify="center">
-      <MdOutlineSearchOff size={28} />
-      <Title order={3}> No posts found</Title>
-    </Group>
-  </Card>
-}
+import OffloadRXMain from "./ui/components/core/OffloadRXMain";
 
 export default async function HomePage({ searchParams }: { searchParams: SearchParams }) {
-  const page = searchParams["page"] ?? "1";
-  const searchTerm = searchParams["search"] ?? "";
-  const sort = searchParams["sort"] ?? "";
+  const generalParams: GeneralParams = {
+    search: String(searchParams["search"] ?? ""),
+    sort: String(searchParams["sort"] ?? ""),
+    page: Number(searchParams["page"] ?? 1),
+  }
+
+  const filtersParams: FiltersParams = {
+    type: String(searchParams["type"] ?? ""),
+    pf: String(searchParams["pf"] ?? ""),
+    pt: String(searchParams["pt"] ?? ""),
+    pr: String(searchParams["pr"] ?? ""),
+    er: String(searchParams["er"] ?? ""),
+  };
+
+  const advancedSearchParams: AdvancedSearchParams = {
+    name: String(searchParams["name"] ?? ""),
+    composition: String(searchParams["composition"] ?? ""),
+    city: String(searchParams["city"] ?? ""),
+    zip: String(searchParams["zip"] ?? ""),
+    lot: String(searchParams["lot"] ?? ""),
+  };
+
   const limit = 10;
-  const posts = await getAllMedicine(String(searchTerm), String(sort), Number(page), limit);
-
-  const numberOfPosts = await getMedicineCount(String(searchTerm));
+  const numberOfPosts = await getMedicineCount(generalParams, filtersParams, advancedSearchParams);
   const numberOfPages = Math.ceil(numberOfPosts[0].count / limit);
+  generalParams.page = Math.max(Math.min(generalParams.page, numberOfPages), 1);
 
-  return (
-    <Flex w="100%" pt={10} justify="center">
-
-      <Box flex={1} className={classes.filters}>
-        <Flex w="100%" pl={10} direction="column" align="flex-end">
-          <FiltersWrapped key={"cardFilter"} />
-        </Flex>
-      </Box>
-
-      <CenterContainer props={{ size: 800 }}>
-        {/*============= Search =============*/}
-        <Search count={numberOfPosts[0].count} />
-
-        {/*============= Posts =============*/}
-        <Flex direction="column" gap={10} w="100%" align="stretch">
-          {posts.length > 0 ?
-            posts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            )) :
-            noPostsFound()
-          }
-        </Flex>
-
-        {/*============= Pagination =============*/}
-        <PaginationControls currentPage={Number(page)} numberOfPages={numberOfPages} />
-      </CenterContainer>
-
-      <Box flex={1} className={classes.filters}>
-        <Flex w="100%" pr={10} direction="column" align="flex-start">
-          <AdvancedSearchWrapped key={"cardAdvanced"} />
-        </Flex>
-      </Box>
-    </Flex>
+  const posts = await getAllMedicine(
+    generalParams,
+    filtersParams,
+    advancedSearchParams,
+    limit
   );
+
+  return <OffloadRXMain
+    posts={posts}
+    postsCount={numberOfPosts[0].count}
+    pagesCount={numberOfPages}
+    currentPage={generalParams.page} />;
 }

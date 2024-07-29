@@ -9,10 +9,10 @@ import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { FaMagnifyingGlass, FaSort } from 'react-icons/fa6';
 import { RxCross1 } from "react-icons/rx";
 import { IoSettingsSharp } from "react-icons/io5";
-import classes from '../core.module.css';
+import classes from './core.module.css';
 import cx from 'clsx';
-import { AdvancedSearchDynamic } from "../AdvancedSearch";
-import { FiltersDynamic } from "../Filters";
+import { AdvancedSearchDynamic } from "./AdvancedSearch";
+import { FiltersDynamic } from "./Filters";
 
 const SearchSkeleton = () => {
   return (
@@ -78,7 +78,7 @@ const Search = ({ count }: { count: number }) => {
   const [modalOpened, modalActions] = useDisclosure(false);
 
 
-  //============= handle search search param =============//
+  //============= Search url param =============//
   function handleSearch(term: string) {
     const params = new URLSearchParams(searchParams);
     if (term) {
@@ -88,8 +88,11 @@ const Search = ({ count }: { count: number }) => {
     }
     replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
+  useEffect(() => {
+    handleSearch(debouncedSearchValue);
+  }, [debouncedSearchValue]);
 
-  //============= handle sort search param =============//
+  //============= Sort url param =============//
   function handleSort(sort: string) {
     const params = new URLSearchParams(searchParams);
     if (sort) {
@@ -99,17 +102,8 @@ const Search = ({ count }: { count: number }) => {
     }
     replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
-
-  //============= Search side effect =============//
   useEffect(() => {
-    handleSearch(debouncedSearchValue);
-  }, [debouncedSearchValue]);
-
-  //============= Sort side effect =============//
-  useEffect(() => {
-    if (sortValue) {
-      handleSort(getSortValue(sortValue));
-    }
+    handleSort(getSortValue(sortValue));
   }, [sortValue]);
 
   //============= Small Screen side effect =============//
@@ -164,8 +158,7 @@ const Search = ({ count }: { count: number }) => {
               <IoSettingsSharp />
             </ActionIcon> :
             <Text c="dimmed" fs="italic"
-              className={classes.slideUp}
-              onClick={() => console.log("Filter posts")}>
+              className={classes.slideUp}>
               {count} results found
             </Text>
           }

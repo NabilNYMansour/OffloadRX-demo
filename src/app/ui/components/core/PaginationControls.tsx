@@ -3,6 +3,7 @@
 import { Group, Pagination } from "@mantine/core";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import classes from './core.module.css';
 
 const PaginationControls = ({ currentPage, numberOfPages }: { currentPage: number, numberOfPages: number }) => {
   const searchParams = useSearchParams();
@@ -11,10 +12,12 @@ const PaginationControls = ({ currentPage, numberOfPages }: { currentPage: numbe
 
   const handlePageChange = (newPage: number, scroll: boolean) => {
     const params = new URLSearchParams(searchParams);
-    if (newPage === 1) {
+    // minimum of 1 and maximum of numberOfPages
+    const page = Math.max(Math.min(newPage, numberOfPages), 1);
+    if (page === 1) {
       params.delete('page');
     } else {
-      params.set('page', Math.max(Math.min(newPage, numberOfPages), 1).toString()); // minimum of 1 and maximum of numberOfPages
+      params.set('page', page.toString());
     }
     replace(`${pathname}?${params.toString()}`, { scroll });
   }
@@ -24,6 +27,7 @@ const PaginationControls = ({ currentPage, numberOfPages }: { currentPage: numbe
   });
 
   return <Pagination.Root
+    className={classes.slideUp}
     disabled={numberOfPages === 0} total={numberOfPages} value={currentPage}
     siblings={2}
     onChange={(newPage) => {
