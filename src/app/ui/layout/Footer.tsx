@@ -1,9 +1,8 @@
 "use client";
 
-import { Divider, Flex, Text } from '@mantine/core';
+import { Flex, Text } from '@mantine/core';
 import classes from './Footer.module.css';
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
 
 export function Footer() {
   const currPath = usePathname();
@@ -16,7 +15,7 @@ export function Footer() {
     <div className={classes.footer}>
       <Flex direction="column" justify="center" align="center">
         <Text fz="xs" lh="md">
-          © {new Date().getFullYear()} Offload RX Inc.
+          © {new Date().getFullYear()} OffloadRx Inc.
         </Text>
       </Flex>
     </div>

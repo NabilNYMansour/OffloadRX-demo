@@ -4,7 +4,7 @@ interface AddressBookIconProps extends React.ComponentPropsWithoutRef<'svg'> {
   size?: number | string;
 }
 
-export const OffloadRX = ({ size, style, ...others }: AddressBookIconProps) => {
+export const OffloadRx = ({ size, style, ...others }: AddressBookIconProps) => {
   return <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"

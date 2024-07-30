@@ -4,7 +4,6 @@ import { and, asc, between, count, desc, eq, gt, gte, like, lte, or, sql } from 
 import { medicineTable, SelectMedicine } from './schema';
 import { db } from '.';
 import { AdvancedSearchParams, FiltersParams, GeneralParams } from '@/lib/types';
-import { fi } from '@faker-js/faker';
 
 export async function getMedicineById(id: SelectMedicine['id']) {
   return db.select().from(medicineTable).where(eq(medicineTable.id, id))

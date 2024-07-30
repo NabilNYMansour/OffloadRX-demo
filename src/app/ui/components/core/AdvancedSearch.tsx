@@ -6,13 +6,13 @@ import classes from '@/app/core.module.css';
 import { ActionIcon, Button, Card, Flex, Group, Skeleton, TextInput, Title } from "@mantine/core";
 import dynamic from "next/dynamic";
 import { GrPowerReset } from "react-icons/gr";
-import React, { useEffect, useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { FaCity, FaHashtag, FaLocationDot } from 'react-icons/fa6';
 import { RxCross1 } from 'react-icons/rx';
 import { MdDriveFileRenameOutline } from 'react-icons/md';
 import { GiChemicalDrop } from "react-icons/gi";
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useDebouncedValue } from '@mantine/hooks';
+import { useDebouncedValue, useMediaQuery } from '@mantine/hooks';
 import { useIsVisible } from '@/app/utils/hooks';
 
 const CustomSearchInput = ({ title, placeholderTitle, icon, value, setValue }:
@@ -21,13 +21,14 @@ const CustomSearchInput = ({ title, placeholderTitle, icon, value, setValue }:
     value: string, setValue: React.Dispatch<React.SetStateAction<string>>
   }
 ) => {
+  const isTouchScreen = useMediaQuery('(pointer:coarse)');
   return (
     <TextInput
       pt={10}
       label={title}
-      radius="md"
+      radius="md" size={isTouchScreen ? 'lg' : 'sm'}
       value={value}
-      placeholder={'Search Posts by ' + placeholderTitle}
+      placeholder={'Search by ' + placeholderTitle}
       leftSection={icon}
       rightSection={
         <ActionIcon variant='subtle' radius="xl"
@@ -83,6 +84,14 @@ const AdvancedSearch = () => {
   const ref = useRef(null);
   const isVisible = useIsVisible(ref);
 
+  const initAdvancedSearch = () => {
+    setNameValue(searchParams.get("name") ?? "");
+    setCompositionValue(searchParams.get("composition") ?? "");
+    setCityValue(searchParams.get("city") ?? "");
+    setZipValue(searchParams.get("zip") ?? "");
+    setLotValue(searchParams.get("lot") ?? "");
+  }
+
   const resetAdvancedSearch = () => {
     const params = new URLSearchParams(searchParams);
     params.delete('name');
@@ -91,14 +100,6 @@ const AdvancedSearch = () => {
     params.delete('zip');
     params.delete('lot');
     replace(`${pathname}?${params.toString()}`, { scroll: false });
-  }
-
-  const initAdvancedSearch = () => {
-    setNameValue(searchParams.get("name") ?? "");
-    setCompositionValue(searchParams.get("composition") ?? "");
-    setCityValue(searchParams.get("city") ?? "");
-    setZipValue(searchParams.get("zip") ?? "");
-    setLotValue(searchParams.get("lot") ?? "");
   }
 
   //============= Init Advanced Search =============//

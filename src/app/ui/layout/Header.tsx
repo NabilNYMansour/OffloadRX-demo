@@ -1,16 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
-import { Avatar, Container, Group, Skeleton, useComputedColorScheme } from '@mantine/core';
-import { useHover } from '@mantine/hooks';
+import { Avatar, Box, Burger, Container, Group, Skeleton, Title, useComputedColorScheme } from '@mantine/core';
+import { useDisclosure, useHover } from '@mantine/hooks';
 import { ThemeToggle } from '../components/buttons/ThemeToggle';
 import classes from './Header.module.css';
-import { SiExcalidraw } from 'react-icons/si';
-import Image from 'next/image';
 import Link from 'next/link';
-import { faker } from '@faker-js/faker'
-import { OffloadRX } from '../icons/custom';
-import { FaUser } from 'react-icons/fa6';
+import { OffloadRx } from '../icons/custom';
+import { usePathname } from 'next/navigation';
 
 export function Header() {
   const [isHeaderVisible, setHeaderVisible] = useState(true);
@@ -18,6 +15,8 @@ export function Header() {
   const [scrollDir, setScrollDir] = useState<'up' | 'down'>('up');
   const prevScrollVal = useRef(0);
   const headerHover = useHover();
+  const pathname = usePathname();
+  const [burgerOpened, burgerActions] = useDisclosure();
 
   const handleScroll = () => {
     if (window.scrollY < 350) {
@@ -67,28 +66,56 @@ export function Header() {
     <header>
       <div ref={headerHover.ref} className={classes.rootHeader}>
         <div className={classes.header} style={slideUp} >
-          <Container size="xl" className={classes.inner}>
+          {/*================= Big Screen =================*/}
+          <Container size="xl" className={classes.inner} visibleFrom='sm'>
+            <Box w="33%">
+              <Link href="/" className={classes.appTitle}>
+                <Group ml="auto" mr="auto" c="main">
+                  <OffloadRx size={40} aria-label="OffloadRx" />
+                  <Title order={1}>OffloadRx</Title>
+                </Group>
+              </Link>
+            </Box>
 
-            <Group w="33%">
+            <Group justify='center' gap={25} h="100%" w="33%">
+              <Link href="/"
+                className={pathname === "/" ? classes.linkSelected : classes.link}>
+                <Title order={5} c={pathname === "/" ? "main" : ""}>
+                  Home
+                </Title>
+              </Link>
+              <Link href="/demo"
+                className={pathname === "/demo" ? classes.linkSelected : classes.link}>
+                <Title order={5} c={pathname === "/demo" ? "main" : ""}>
+                  Demo
+                </Title>
+              </Link>
+              <Link href="/about"
+                className={pathname === "/about" ? classes.linkSelected : classes.link}>
+                <Title order={5} c={pathname === "/about" ? "main" : ""}>
+                  About
+                </Title>
+              </Link>
+            </Group>
+
+            <Group justify='right' align='center' w="33%">
+              <ThemeToggle />
               <div style={{ scale: "1.25", height: "28px" }} >
                 <Avatar radius="xl" size={28} />
               </div>
             </Group>
-
-            <Link href="/" className={classes.appTitle}>
-              <Group ml="auto" mr="auto" c="main">
-                <OffloadRX size={40} aria-label="OffloadRX" />
-                <Group visibleFrom="sm">
-                  <h1>Offload RX</h1>
+          </Container>
+          {/*================= Small Screen =================*/}
+          <Container size="xl" className={classes.inner} hiddenFrom='sm'>
+            <Box w="33%">
+              <Link href="/" className={classes.appTitle}>
+                <Group ml="auto" mr="auto" c="main">
+                  <OffloadRx size={40} aria-label="OffloadRx" />
                 </Group>
-              </Group>
-            </Link>
+              </Link>
+            </Box>
 
-            {/* Phone */}
-            <Group justify='right' align='center' w="33%">
-              <ThemeToggle />
-            </Group>
-
+            <Burger opened={burgerOpened} onClick={burgerActions.toggle} aria-label="Toggle navigation" />
           </Container>
         </div>
       </div>

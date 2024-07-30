@@ -20,7 +20,7 @@ const nunito = Nunito_Sans({
 
 // TODO - Update the description, title, author, and keywords
 // const description = "...";
-// const title = "OffloadRX";
+// const title = "OffloadRx";
 // const author = "Nabil Mansour";
 // const keywords = "...";
 // const imageLink = `${MAIN_URL}/ExcalihubLogoTitle.png`;
