@@ -13,9 +13,8 @@ import classes from '@/app/core.module.css';
 import cx from 'clsx';
 import { AdvancedSearchDynamic } from "./AdvancedSearch";
 import { FiltersDynamic } from "./Filters";
-import { cookies } from 'next/headers'
 
-const SearchSkeleton = () => {
+const SearchSortSkeleton = () => {
   return (
     <Flex direction="column" w="100%" gap={10}>
       <Skeleton radius="md" h={50} className={classes.slideUp} />
@@ -66,7 +65,7 @@ const availableSortValues = [
   "Time: Newest",
 ];
 
-const Search = ({ count }: { count: number }) => {
+const SearchSort = ({ count }: { count: number }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -153,12 +152,12 @@ const Search = ({ count }: { count: number }) => {
           {screenSmall ?
             <ActionIcon size="lg"
               aria-label="Filter posts"
-              className={cx(classes.filterButton, classes.slideUp)}
+              className={cx(classes.filterButton, classes.shake)}
               onClick={modalActions.open}>
               <IoSettingsSharp />
             </ActionIcon> :
-            <Text c="dimmed" fs="italic"
-              className={classes.slideUp}>
+            <Text c="dimmed" fs="italic" key={count}
+              className={classes.shake}>
               {count} results found
             </Text>
           }
@@ -191,7 +190,7 @@ const Search = ({ count }: { count: number }) => {
   );
 };
 
-export default dynamic(() => Promise.resolve(Search), {
+export default dynamic(() => Promise.resolve(SearchSort), {
   ssr: false,
-  loading: () => <SearchSkeleton />
+  loading: () => <SearchSortSkeleton />
 });

@@ -31,6 +31,7 @@
 
 .link:hover {
   scale: 1.1;
+  color: light-dark(black, white);
 }
 
 .linkSelected {
@@ -46,24 +47,10 @@
 .appTitle {
   text-decoration: none;
   transition: all 0.2s ease-in-out;
+  color: var(--mantine-color-main-filled);
 }
 
 .appTitle:hover {
   scale: 1.1;
-}
-
-.appTitle div {
-  transition: all 0.2s ease-in-out;
-}
-
-.appTitle svg {
-  transition: all 0.2s ease-in-out;
-}
-
-.appTitle:hover div {
-  color: light-dark(black, white);
-}
-
-.appTitle:hover svg {
   color: light-dark(black, white);
 }

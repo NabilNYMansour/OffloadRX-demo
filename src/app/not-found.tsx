@@ -7,17 +7,14 @@ export default function NotFound() {
     <div className={classes.root}>
       <Container>
         <div className={classes.label}>404</div>
-        <Title className={classes.title}>¯\_(ツ)_/¯</Title>
+        <Title className={classes.title}>Nothing to see here</Title>
         <Text size="lg" ta="center" className={classes.description}>
-          I don&apos;t know what you&apos;re looking for.
+          Page you are trying to open does not exist. You may have mistyped the address, or the page has been moved to another URL. If you think this is an error contact support.
         </Text>
         <Group justify="center">
           <Link key="Home" href="/" className={classes.link}>
-            <Button
-              variant="white"
-              size="md"
-            >
-              Back to Home
+            <Button size="md">
+              Take me back to home page
             </Button>
           </Link>
         </Group>

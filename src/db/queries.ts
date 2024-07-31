@@ -101,7 +101,7 @@ export async function getAllMedicine(
   filtersParams: FiltersParams,
   advancedSearchParams: AdvancedSearchParams,
   limit: number
-) {
+): Promise<SelectMedicine[]> {
   const actualPage = Math.max(generalParams.page - 1, 0);
 
   return await db.select().from(medicineTable)

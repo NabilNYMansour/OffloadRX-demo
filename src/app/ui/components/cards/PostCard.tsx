@@ -8,7 +8,7 @@ import { SelectMedicine } from '@/db/schema';
 import dynamic from 'next/dynamic';
 import { FaRegStar, FaStar, FaTag } from 'react-icons/fa6';
 import { notifications } from '@mantine/notifications';
-import { isFavourite, toggleFavourite } from '@/app/utils/helper';
+import { isFavourite, toggleFavourite } from '@/app/utils/localStorageHelpers';
 import { MdHandshake } from 'react-icons/md';
 
 const size = 250;
@@ -51,7 +51,9 @@ export const PostCardSkeleton = () => { // Skeleton will not have favourite butt
   );
 }
 
-const PostCard = ({ post }: { post: SelectMedicine }) => {
+const PostCard = ({ post }: {
+  post: SelectMedicine,
+}) => {
   const [loaded, setLoaded] = useState(false);
 
   const [datePosted] = useState<Date>(new Date(post.datePosted));
@@ -101,12 +103,14 @@ const PostCard = ({ post }: { post: SelectMedicine }) => {
         {/*============= Text =============*/}
         <Flex direction="column" w="100%">
           <Group gap={10}>
-            <Text fw={700} lineClamp={1} c="main">{post.forSale ?
-              <span><FaTag />Selling for:</span> :
-              <span><MdHandshake />Wanted for:</span>
-            }
+            <Text fw={700} lineClamp={1} c={post.forSale ? "main" : "yellow"}>
+              {post.forSale ?
+                <span><FaTag />Selling for:</span> :
+                <span><MdHandshake />Wanted for:</span>
+              }
             </Text>
-            <Title order={post.price ? 1 : 3} lineClamp={1} c={post.price ? "main" : "dimmed"}>
+            <Title order={post.price ? 1 : 3} lineClamp={1}
+              c={post.price ? post.forSale ? "main" : "yellow" : "dimmed"}>
               {post.price ?
                 <NumberFormatter prefix="$ " value={post.price} thousandSeparator /> :
                 "Please Contact"
@@ -132,12 +136,13 @@ const PostCard = ({ post }: { post: SelectMedicine }) => {
       </Flex>
 
       {/*============= Favourite =============*/}
-      <ActionIcon
+      {/* Functionality is not easily implemented with demo */}
+      {/* <ActionIcon
         m={5} pos="absolute" right={0} top={0}
         onClick={handleFavourite} radius="xl" size="lg"
         variant='subtle' aria-label='add to favourite'>
         {isFavourited ? <FaStar size={25} /> : <FaRegStar size={25} />}
-      </ActionIcon>
+      </ActionIcon> */}
     </Card >
   );
 };

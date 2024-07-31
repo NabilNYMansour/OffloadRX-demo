@@ -1,13 +1,77 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
-import { Avatar, Box, Burger, Container, Group, Skeleton, Title, useComputedColorScheme } from '@mantine/core';
+import { Avatar, Box, Burger, Container, Drawer, Flex, Group, Text, Title } from '@mantine/core';
 import { useDisclosure, useHover } from '@mantine/hooks';
 import { ThemeToggle } from '../components/buttons/ThemeToggle';
 import classes from './Header.module.css';
 import Link from 'next/link';
 import { OffloadRx } from '../icons/custom';
 import { usePathname } from 'next/navigation';
+
+const HeaderTitle = () => {
+  return <Link href="/" style={{ textDecoration: "none" }}>
+    <Group ml="auto" mr="auto" className={classes.appTitle}>
+      <OffloadRx size={40} aria-label="OffloadRx" />
+      <Group gap={0}>
+        <Title order={1}>OffloadRx</Title>
+        <Text size='xs' fs="italic" style={{ alignSelf: "flex-end" }}>v0.1</Text>
+      </Group>
+    </Group>
+  </Link>
+};
+const Links = ({ pathname }: { pathname: string }) => {
+  return <>
+    <Link href="/"
+      className={pathname === "/" ? classes.linkSelected : classes.link}>
+      <Title order={5} c={pathname === "/" ? "main" : ""}>
+        Home
+      </Title>
+    </Link>
+    <Link href="/demo"
+      className={pathname === "/demo" ? classes.linkSelected : classes.link}>
+      <Title order={5} c={pathname === "/demo" ? "main" : ""}>
+        Demo
+      </Title>
+    </Link>
+    <Link href="/about"
+      className={pathname === "/about" ? classes.linkSelected : classes.link}>
+      <Title order={5} c={pathname === "/about" ? "main" : ""}>
+        About
+      </Title>
+    </Link>
+  </>
+};
+const ActionIcons = ({ reverse = false }: { reverse?: boolean }) => {
+  if (reverse) {
+    return <>
+      <div style={{ scale: "1.25", height: "28px" }} >
+        <Avatar radius="xl" size={28} />
+      </div>
+      <ThemeToggle />
+    </>
+  }
+  return <>
+    <ThemeToggle />
+    <div style={{ scale: "1.25", height: "28px" }} >
+      <Avatar radius="xl" size={28} />
+    </div>
+  </>
+};
+const HeaderDrawer = ({ pathname, opened, close }:
+  {
+    pathname: string,
+    opened: boolean,
+    close: () => void
+  }
+) => {
+  return <Drawer hiddenFrom='sm' position='right' opened={opened} onClose={close}
+    title={<Group><ActionIcons reverse /></Group>}>
+    <Flex direction="column" align="center" gap={25} onClick={close}>
+      <Links pathname={pathname} />
+    </Flex>
+  </Drawer>
+};
 
 export function Header() {
   const [isHeaderVisible, setHeaderVisible] = useState(true);
@@ -17,7 +81,6 @@ export function Header() {
   const headerHover = useHover();
   const pathname = usePathname();
   const [burgerOpened, burgerActions] = useDisclosure();
-
   const handleScroll = () => {
     if (window.scrollY < 350) {
       setHeaderVisible(true);
@@ -32,7 +95,6 @@ export function Header() {
       prevScrollVal.current = window.scrollY;
     }
   };
-
   useEffect(() => {
     handleScroll();
     window.addEventListener('scroll', handleScroll);
@@ -40,7 +102,6 @@ export function Header() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
   useEffect(() => {
     const intervalID = setTimeout(() => {
       if (scrollDir === 'down') {
@@ -52,11 +113,9 @@ export function Header() {
     }, 200);
     return () => clearInterval(intervalID);
   }, [checkHeader, scrollDir]);
-
   useEffect(() => {
     setScrollDir("up");
   }, [headerHover.hovered]);
-
   const slideUp = {
     transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-80%)',
     transition: "transform ease 0.25s"
@@ -69,53 +128,26 @@ export function Header() {
           {/*================= Big Screen =================*/}
           <Container size="xl" className={classes.inner} visibleFrom='sm'>
             <Box w="33%">
-              <Link href="/" className={classes.appTitle}>
-                <Group ml="auto" mr="auto" c="main">
-                  <OffloadRx size={40} aria-label="OffloadRx" />
-                  <Title order={1}>OffloadRx</Title>
-                </Group>
-              </Link>
+              <HeaderTitle />
             </Box>
 
             <Group justify='center' gap={25} h="100%" w="33%">
-              <Link href="/"
-                className={pathname === "/" ? classes.linkSelected : classes.link}>
-                <Title order={5} c={pathname === "/" ? "main" : ""}>
-                  Home
-                </Title>
-              </Link>
-              <Link href="/demo"
-                className={pathname === "/demo" ? classes.linkSelected : classes.link}>
-                <Title order={5} c={pathname === "/demo" ? "main" : ""}>
-                  Demo
-                </Title>
-              </Link>
-              <Link href="/about"
-                className={pathname === "/about" ? classes.linkSelected : classes.link}>
-                <Title order={5} c={pathname === "/about" ? "main" : ""}>
-                  About
-                </Title>
-              </Link>
+              <Links pathname={pathname} />
             </Group>
 
             <Group justify='right' align='center' w="33%">
-              <ThemeToggle />
-              <div style={{ scale: "1.25", height: "28px" }} >
-                <Avatar radius="xl" size={28} />
-              </div>
+              <ActionIcons />
             </Group>
           </Container>
+
           {/*================= Small Screen =================*/}
           <Container size="xl" className={classes.inner} hiddenFrom='sm'>
-            <Box w="33%">
-              <Link href="/" className={classes.appTitle}>
-                <Group ml="auto" mr="auto" c="main">
-                  <OffloadRx size={40} aria-label="OffloadRx" />
-                </Group>
-              </Link>
+            <Box>
+              <HeaderTitle />
             </Box>
 
             <Burger opened={burgerOpened} onClick={burgerActions.toggle} aria-label="Toggle navigation" />
+            <HeaderDrawer pathname={pathname} opened={burgerOpened} close={burgerActions.close} />
           </Container>
         </div>
       </div>

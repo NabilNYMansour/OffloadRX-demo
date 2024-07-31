@@ -2,26 +2,8 @@
 
 import { AdvancedSearchParams, FiltersParams, GeneralParams, SearchParams } from "@/lib/types";
 import { getAllMedicine, getMedicineCount } from "@/db/queries";
-import { MdOutlineSearchOff } from 'react-icons/md';
-import classes from '@/app/core.module.css';
-import { Box, Card, Flex, Group, Title } from "@mantine/core";
 import { redirect } from "next/navigation";
-import { FiltersWrapped } from "../ui/components/core/Filters";
-import CenterContainer from "../ui/components/core/CenterContainer";
-import Search from "../ui/components/core/Search";
-import PostCard from "../ui/components/cards/PostCard";
-import PaginationControls from "../ui/components/core/PaginationControls";
-import { AdvancedSearchWrapped } from "../ui/components/core/AdvancedSearch";
-
-
-const noPostsFound = () => {
-  return <Card className={classes.slideUp} shadow="sm" padding="lg" radius="md" withBorder>
-    <Group justify="center">
-      <MdOutlineSearchOff size={28} />
-      <Title order={3}> No posts found</Title>
-    </Group>
-  </Card>
-}
+import MainApp from "../ui/components/core/MainApp";
 
 export default async function DemoPage({ searchParams }: { searchParams: SearchParams }) {
   const generalParams: GeneralParams = {
@@ -60,9 +42,6 @@ export default async function DemoPage({ searchParams }: { searchParams: SearchP
     return redirect(`demo?${newSearchParams.toString()}`); // TODO: Fix redirect so that 'demo' is not hardcoded
   }
 
-  console.log("searchParams:", searchParams);
-  
-
   const posts = await getAllMedicine(
     generalParams,
     filtersParams,
@@ -74,39 +53,7 @@ export default async function DemoPage({ searchParams }: { searchParams: SearchP
   const pagesCount = numberOfPages;
   const currentPage = generalParams.page;
 
-  return (
-    <Flex w="100%" h="100%" pt={10} justify="center">
-      {/*============= Filters =============*/}
-      <Box flex={1} className={classes.bigScreen}>
-        <Flex w="100%" pl={10} direction="column" align="flex-end">
-          <FiltersWrapped />
-        </Flex>
-      </Box>
-
-      <CenterContainer props={{ size: 800 }}>
-        {/*============= Search =============*/}
-        <Search count={postsCount} />
-
-        {/*============= Posts =============*/}
-        <Flex direction="column" gap={10} w="100%" align="stretch">
-          {posts.length > 0 ?
-            posts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            )) :
-            noPostsFound()
-          }
-        </Flex>
-
-        {/*============= Pagination =============*/}
-        <PaginationControls currentPage={Number(currentPage)} numberOfPages={pagesCount} />
-      </CenterContainer>
-
-      {/*============= Advanced Search =============*/}
-      <Box flex={1} className={classes.bigScreen}>
-        <Flex w="100%" pr={10} direction="column" align="flex-start">
-          <AdvancedSearchWrapped />
-        </Flex>
-      </Box>
-    </Flex>
-  );
+  return <MainApp
+    posts={posts} postsCount={postsCount}
+    currentPage={currentPage} pagesCount={pagesCount} />;
 }

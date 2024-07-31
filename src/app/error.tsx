@@ -11,15 +11,16 @@ export default function Error({ error, reset }: {
     <div className={classes.root}>
       <Container>
         <div className={classes.label}>500</div>
-        <Title className={classes.title}>Oops... </Title>
+        <Title className={classes.title}>Something bad just happened... </Title>
         <Text size="lg" ta="center" className={classes.description}>
-          Something went wrong. Don&apos;t worry, it&apos;s not from your end.
+          Don&apos;t worry, it&apos;s not from your end. 
+          <br />
+          Our development team was already notified.
           <br />
           Try refreshing the page.
         </Text>
         <Group justify="center">
-          <Button variant='white'
-            size="md"
+          <Button size="md"
             onClick={
               () => reset()
             }>

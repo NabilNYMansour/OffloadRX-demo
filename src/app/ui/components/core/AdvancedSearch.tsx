@@ -6,7 +6,7 @@ import classes from '@/app/core.module.css';
 import { ActionIcon, Button, Card, Flex, Group, Skeleton, TextInput, Title } from "@mantine/core";
 import dynamic from "next/dynamic";
 import { GrPowerReset } from "react-icons/gr";
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaCity, FaHashtag, FaLocationDot } from 'react-icons/fa6';
 import { RxCross1 } from 'react-icons/rx';
 import { MdDriveFileRenameOutline } from 'react-icons/md';
@@ -145,6 +145,7 @@ const AdvancedSearch = () => {
         <Button
           disabled={!canReset(searchParams)}
           onClick={resetAdvancedSearch}
+          style={{transition: "all 0.2s"}}
           leftSection={<GrPowerReset />}>
           Reset Advanced Search
         </Button>

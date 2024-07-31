@@ -3,11 +3,11 @@
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import classes from '@/app/core.module.css';
-import { Button, Card, Flex, Group, NumberInput, Radio, Skeleton, Text, Title } from "@mantine/core";
+import { Button, Card, Checkbox, Flex, Group, NumberInput, Radio, Skeleton, Text, Title } from "@mantine/core";
 import dynamic from "next/dynamic";
 import { GrPowerReset } from "react-icons/gr";
 import { DatePickerInput } from '@mantine/dates';
-import { FaCalendarDays, FaTag } from 'react-icons/fa6';
+import { FaCalendarDays, FaStar, FaTag } from 'react-icons/fa6';
 import { MdHandshake } from 'react-icons/md';
 import { OffloadRx } from '../../icons/custom';
 import { HiCurrencyDollar } from "react-icons/hi";
@@ -15,7 +15,7 @@ import { FaCalendarTimes } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useIsVisible } from '@/app/utils/hooks';
-import { useDebouncedValue, useMediaQuery } from '@mantine/hooks';
+import { useDebouncedValue, useLocalStorage, useMediaQuery } from '@mantine/hooks';
 
 const FiltersSkeleton = () => {
   return (
@@ -165,6 +165,7 @@ const Filters = () => {
         <Button
           disabled={!canReset(searchParams)}
           onClick={async () => await resetFilters()}
+          style={{ transition: "all 0.2s" }}
           leftSection={<GrPowerReset />}>
           Reset Filters
         </Button>
