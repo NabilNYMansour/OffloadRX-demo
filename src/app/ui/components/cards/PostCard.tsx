@@ -1,39 +1,18 @@
 "use client";
 
-import { ActionIcon, Card, Divider, Flex, Group, NumberFormatter, Skeleton, Text, Title } from '@mantine/core';
+import { Card, Divider, Flex, Group, NumberFormatter, Skeleton, Text, Title } from '@mantine/core';
 import { useState } from 'react';
-import classes from './PostCard.module.css';
+import classes from './card.module.css';
 import { Image } from '@mantine/core';
 import { SelectMedicine } from '@/db/schema';
 import dynamic from 'next/dynamic';
-import { FaRegStar, FaStar, FaTag } from 'react-icons/fa6';
+import { FaTag } from 'react-icons/fa6';
 import { notifications } from '@mantine/notifications';
-import { isFavourite, toggleFavourite } from '@/app/utils/localStorageHelpers';
+import { agoCalculator, formatExpiry, isFavourite, toggleFavourite } from '@/app/utils/helpers';
 import { MdHandshake } from 'react-icons/md';
+import { useRouter } from 'next/navigation';
 
 const size = 250;
-
-const agoCalculator = (days: number) => {
-  var months = Math.floor(days / 30);
-  days = days - months * 30;
-  var weeks = Math.floor(days / 7);
-  days = Math.floor(days - weeks * 7);
-  if (months > 0) {
-    return months + " month" + (months > 1 ? "s" : "") + " ago";
-  } else if (weeks > 0) {
-    return weeks + " week" + (weeks > 1 ? "s" : "") + " ago";
-  } else if (days > 0) {
-    return days + " day" + (days > 1 ? "s" : "") + " ago";
-  } else {
-    return "today";
-  }
-}
-
-const formatExpiry = (date: Date) => {
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = String(date.getFullYear()).slice(-2);
-  return `${month}/${year}`;
-}
 
 export const PostCardSkeleton = () => { // Skeleton will not have favourite button
   return (
@@ -52,40 +31,46 @@ export const PostCardSkeleton = () => { // Skeleton will not have favourite butt
 }
 
 const PostCard = ({ post }: {
-  post: SelectMedicine,
+  post: SelectMedicine, // Post type is not excatly same as SelectMedicine but is a subset
 }) => {
   const [loaded, setLoaded] = useState(false);
+  const router = useRouter();
 
   const [datePosted] = useState<Date>(new Date(post.datePosted));
   const [postedAgoString] = useState<string>(
     agoCalculator(Math.floor((new Date().getTime() - datePosted.getTime()) / (1000 * 60 * 60 * 24)))
   );
 
-  const [isFavourited, setIsFavourited] = useState(isFavourite(post.id));
-
-  const handleFavourite = () => {
-    if (!isFavourited) { // not favourited
-      notifications.show({
-        title: <Flex align="center" gap={5}>
-          Added to favourites ⭐
-        </Flex>,
-        message: '"' + post.name + '" is added to your favourites.',
-      });
-    } else { // was favourited
-      notifications.show({
-        title: <Flex align="center" gap={5}>
-          Removed from favourites ⭐
-        </Flex>,
-        message: '"' + post.name + '" is removed from your favourites.',
-      });
-    }
-    toggleFavourite(post.id);
-    setIsFavourited(!isFavourited);
+  const gotoPost = () => {
+    router.push(`/post/${post.slug}`);
   }
+
+  // const [isFavourited, setIsFavourited] = useState(isFavourite(post.id));
+
+  // const handleFavourite = () => {
+  //   if (!isFavourited) { // not favourited
+  //     notifications.show({
+  //       title: <Flex align="center" gap={5}>
+  //         Added to favourites ⭐
+  //       </Flex>,
+  //       message: '"' + post.name + '" is added to your favourites.',
+  //     });
+  //   } else { // was favourited
+  //     notifications.show({
+  //       title: <Flex align="center" gap={5}>
+  //         Removed from favourites ⭐
+  //       </Flex>,
+  //       message: '"' + post.name + '" is removed from your favourites.',
+  //     });
+  //   }
+  //   toggleFavourite(post.id);
+  //   setIsFavourited(!isFavourited);
+  // }
 
   return (
     <Card miw="100%" className={classes.postCard} shadow="sm" radius="md" padding="lg" withBorder>
-      <Flex gap={25} className={classes.cardFlex}>
+      <Flex gap={25} className={classes.cardFlex}
+        onClick={gotoPost}>
 
         {/*============= Image =============*/}
         <>

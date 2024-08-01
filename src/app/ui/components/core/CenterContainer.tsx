@@ -1,4 +1,4 @@
-import { Container, ContainerProps, MantineSize } from '@mantine/core';
+import { Container, ContainerProps } from '@mantine/core';
 import React from 'react';
 import classes from './CenterContainer.module.css';
 

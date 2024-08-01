@@ -24,7 +24,7 @@ export default async function DemoPage({ searchParams }: { searchParams: SearchP
     name: String(searchParams["name"] ?? ""),
     composition: String(searchParams["composition"] ?? ""),
     city: String(searchParams["city"] ?? ""),
-    zip: String(searchParams["zip"] ?? ""),
+    postal: String(searchParams["postal"] ?? ""),
     lot: String(searchParams["lot"] ?? ""),
   };
 

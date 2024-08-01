@@ -12,7 +12,7 @@ export const medicineTable = sqliteTable('users', {
 
   city: text('city').notNull(), // City
   street: text('street').notNull(), // Street
-  zip: text('zip').notNull(), // Zip
+  postal: text('postal').notNull(), // Postal
   phoneNumber: text('phone_number').notNull(), // Phone Number
   email: text('email').notNull(), // Email
 

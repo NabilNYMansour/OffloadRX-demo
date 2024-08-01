@@ -20,21 +20,21 @@ const HeaderTitle = () => {
     </Group>
   </Link>
 };
-const Links = ({ pathname }: { pathname: string }) => {
+const Links = ({ pathname, close }: { pathname: string, close?: () => void }) => {
   return <>
-    <Link href="/"
+    <Link href="/" onClick={close}
       className={pathname === "/" ? classes.linkSelected : classes.link}>
       <Title order={5} c={pathname === "/" ? "main" : ""}>
         Home
       </Title>
     </Link>
-    <Link href="/demo"
+    <Link href="/demo" onClick={close}
       className={pathname === "/demo" ? classes.linkSelected : classes.link}>
       <Title order={5} c={pathname === "/demo" ? "main" : ""}>
         Demo
       </Title>
     </Link>
-    <Link href="/about"
+    <Link href="/about" onClick={close}
       className={pathname === "/about" ? classes.linkSelected : classes.link}>
       <Title order={5} c={pathname === "/about" ? "main" : ""}>
         About
@@ -67,8 +67,8 @@ const HeaderDrawer = ({ pathname, opened, close }:
 ) => {
   return <Drawer hiddenFrom='sm' position='right' opened={opened} onClose={close}
     title={<Group><ActionIcons reverse /></Group>}>
-    <Flex direction="column" align="center" gap={25} onClick={close}>
-      <Links pathname={pathname} />
+    <Flex direction="column" align="center" gap={25}>
+      <Links pathname={pathname} close={close} />
     </Flex>
   </Drawer>
 };
@@ -132,7 +132,7 @@ export function Header() {
             </Box>
 
             <Group justify='center' gap={25} h="100%" w="33%">
-              <Links pathname={pathname} />
+              <Links pathname={pathname}  />
             </Group>
 
             <Group justify='right' align='center' w="33%">

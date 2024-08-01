@@ -7,7 +7,7 @@ import { Button, Card, Checkbox, Flex, Group, NumberInput, Radio, Skeleton, Text
 import dynamic from "next/dynamic";
 import { GrPowerReset } from "react-icons/gr";
 import { DatePickerInput } from '@mantine/dates';
-import { FaCalendarDays, FaStar, FaTag } from 'react-icons/fa6';
+import { FaCalendarDays, FaTag } from 'react-icons/fa6';
 import { MdHandshake } from 'react-icons/md';
 import { OffloadRx } from '../../icons/custom';
 import { HiCurrencyDollar } from "react-icons/hi";
@@ -15,11 +15,11 @@ import { FaCalendarTimes } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import { ReadonlyURLSearchParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useIsVisible } from '@/app/utils/hooks';
-import { useDebouncedValue, useLocalStorage, useMediaQuery } from '@mantine/hooks';
+import { useDebouncedValue, useMediaQuery } from '@mantine/hooks';
 
 const FiltersSkeleton = () => {
   return (
-    <Skeleton radius="md" h={440} w="100%" />
+    <Skeleton radius="md" h={465} w="100%" />
   );
 }
 
@@ -208,6 +208,10 @@ const Filters = () => {
           min={0}
           onChange={setPriceTo} />
       </Flex>
+      <Checkbox mt={5}
+        checked={priceFrom !== "" && Number(priceFrom) >= 0}
+        onChange={(event) => setPriceFrom(event.target.checked ? 0 : "")}
+        label="Only show items with a price" />
 
       {/*============= Date Posted =============*/}
       <Group align='center' gap={5} pt={10}>

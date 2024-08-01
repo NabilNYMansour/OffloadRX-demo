@@ -15,6 +15,6 @@ export type AdvancedSearchParams = {
   name: string;
   composition: string;
   city: string;
-  zip: string;
+  postal: string;
   lot: string;
 };

@@ -7,7 +7,7 @@ CREATE TABLE `users` (
 	`for_sale` integer NOT NULL,
 	`city` text NOT NULL,
 	`street` text NOT NULL,
-	`zip` text NOT NULL,
+	`postal` text NOT NULL,
 	`phone_number` text NOT NULL,
 	`email` text NOT NULL,
 	`date_posted` integer NOT NULL,

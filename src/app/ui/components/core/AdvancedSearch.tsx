@@ -50,7 +50,7 @@ const AdvancedSearchSkeleton = () => {
 }
 
 const canReset = (searchParams: URLSearchParams) => {
-  return searchParams.get("name") || searchParams.get("composition") || searchParams.get("city") || searchParams.get("zip") || searchParams.get("lot");
+  return searchParams.get("name") || searchParams.get("composition") || searchParams.get("city") || searchParams.get("postal") || searchParams.get("lot");
 }
 
 const AdvancedSearch = () => {
@@ -67,7 +67,7 @@ const AdvancedSearch = () => {
   const [cityValue, setCityValue] = useState<string>(searchParams.get("city") ?? "");
   const [debouncedCityValue] = useDebouncedValue(cityValue, 500);
 
-  const [zipValue, setZipValue] = useState<string>(searchParams.get("zip") ?? "");
+  const [zipValue, setZipValue] = useState<string>(searchParams.get("postal") ?? "");
   const [debouncedZipValue] = useDebouncedValue(zipValue, 500);
 
   const [lotValue, setLotValue] = useState<string>(searchParams.get("lot") ?? "");
@@ -77,7 +77,7 @@ const AdvancedSearch = () => {
     { title: "Item Name", placeholderTitle: "Name", icon: <MdDriveFileRenameOutline />, value: nameValue, setValue: setNameValue },
     { title: "Chemical Composition", placeholderTitle: "Composition", icon: <GiChemicalDrop />, value: compositionValue, setValue: setCompositionValue },
     { title: "City", placeholderTitle: "City", icon: <FaCity />, value: cityValue, setValue: setCityValue },
-    { title: "Zip Code", placeholderTitle: "Zip Code", icon: <FaLocationDot />, value: zipValue, setValue: setZipValue },
+    { title: "Postal Code", placeholderTitle: "Postal Code", icon: <FaLocationDot />, value: zipValue, setValue: setZipValue },
     { title: "LOT#", placeholderTitle: "LOT#", icon: <FaHashtag />, value: lotValue, setValue: setLotValue }
   ];
 
@@ -88,7 +88,7 @@ const AdvancedSearch = () => {
     setNameValue(searchParams.get("name") ?? "");
     setCompositionValue(searchParams.get("composition") ?? "");
     setCityValue(searchParams.get("city") ?? "");
-    setZipValue(searchParams.get("zip") ?? "");
+    setZipValue(searchParams.get("postal") ?? "");
     setLotValue(searchParams.get("lot") ?? "");
   }
 
@@ -97,7 +97,7 @@ const AdvancedSearch = () => {
     params.delete('name');
     params.delete('composition');
     params.delete('city');
-    params.delete('zip');
+    params.delete('postal');
     params.delete('lot');
     replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
@@ -121,7 +121,7 @@ const AdvancedSearch = () => {
   }, [debouncedCityValue]);
 
   useEffect(() => {
-    handleSearchParam('zip', debouncedZipValue);
+    handleSearchParam('postal', debouncedZipValue);
   }, [debouncedZipValue]);
 
   useEffect(() => {
@@ -145,7 +145,7 @@ const AdvancedSearch = () => {
         <Button
           disabled={!canReset(searchParams)}
           onClick={resetAdvancedSearch}
-          style={{transition: "all 0.2s"}}
+          style={{ transition: "all 0.2s" }}
           leftSection={<GrPowerReset />}>
           Reset Advanced Search
         </Button>

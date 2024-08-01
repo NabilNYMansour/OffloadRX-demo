@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "cc1d69ea-c924-4692-b2b0-171b24148f26",
+  "id": "a3abcb20-4a2d-470f-8d26-f9f37f92a744",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "users": {
@@ -63,8 +63,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "zip": {
-          "name": "zip",
+        "postal": {
+          "name": "postal",
           "type": "text",
           "primaryKey": false,
           "notNull": true,

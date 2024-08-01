@@ -10,8 +10,6 @@ import PaginationControls from "./PaginationControls";
 import { AdvancedSearchWrapped } from "./AdvancedSearch";
 import PostCard from "../cards/PostCard";
 import { SelectMedicine } from "@/db/schema";
-import { useLocalStorage } from '@mantine/hooks';
-import { useEffect } from 'react';
 
 const noPostsFound = () => {
   return <Card className={classes.slideUp} shadow="sm" padding="lg" radius="md" withBorder>
@@ -47,9 +45,8 @@ const MainApp = ({ posts, postsCount, currentPage, pagesCount }:
         <Flex direction="column" gap={10} w="100%" align="stretch">
           {posts.length > 0 ?
             posts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            )) :
-            noPostsFound()}
+              <PostCard key={post.id+post.slug} post={post} />
+            )) : noPostsFound()}
         </Flex>
 
         {/*============= Pagination =============*/}

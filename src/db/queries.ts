@@ -6,7 +6,11 @@ import { db } from '.';
 import { AdvancedSearchParams, FiltersParams, GeneralParams } from '@/lib/types';
 
 export async function getMedicineById(id: SelectMedicine['id']) {
-  return db.select().from(medicineTable).where(eq(medicineTable.id, id))
+  return await db.select().from(medicineTable).where(eq(medicineTable.id, id))
+}
+
+export async function getMedicineBySlug(slug: SelectMedicine['slug']) {
+  return await db.select().from(medicineTable).where(eq(medicineTable.slug, slug))
 }
 
 //================== General Search ==================//
@@ -15,7 +19,7 @@ const whereFunc = (searchTerm: string) => or(
   like(medicineTable.composition, `%${searchTerm}%`),
   like(medicineTable.city, `%${searchTerm}%`),
   like(medicineTable.street, `%${searchTerm}%`),
-  like(medicineTable.zip, `%${searchTerm}%`),
+  like(medicineTable.postal, `%${searchTerm}%`),
   like(medicineTable.expiry, `%${searchTerm}%`),
   like(medicineTable.lotNumber, `%${searchTerm}%`),
 )
@@ -75,7 +79,7 @@ const advancedSearchFunc = (advancedSearchParams: AdvancedSearchParams) => {
     like(medicineTable.name, `%${advancedSearchParams.name}%`),
     like(medicineTable.composition, `%${advancedSearchParams.composition}%`),
     like(medicineTable.city, `%${advancedSearchParams.city}%`),
-    like(medicineTable.zip, `%${advancedSearchParams.zip}%`),
+    like(medicineTable.postal, `%${advancedSearchParams.postal}%`),
     like(medicineTable.lotNumber, `%${advancedSearchParams.lot}%`),
   )
 }
@@ -101,7 +105,7 @@ export async function getAllMedicine(
   filtersParams: FiltersParams,
   advancedSearchParams: AdvancedSearchParams,
   limit: number
-): Promise<SelectMedicine[]> {
+) {
   const actualPage = Math.max(generalParams.page - 1, 0);
 
   return await db.select().from(medicineTable)

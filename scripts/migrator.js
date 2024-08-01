@@ -64,7 +64,7 @@ const medicineTable = sqliteTable('users', {
 
   city: text('city').notNull(), // City
   street: text('street').notNull(), // Street
-  zip: text('zip').notNull(), // Zip
+  postal: text('postal').notNull(), // Postal
   phoneNumber: text('phone_number').notNull(), // Phone Number
   email: text('email').notNull(), // Email
 
@@ -96,7 +96,7 @@ fs.createReadStream("./data/Medicine_Details.csv")
 
     const city = randomCityInOntario();
     const street = faker.location.streetAddress();
-    const zip = faker.location.zipCode(randomCapitalString(1) + "#" + randomCapitalString(1) + " #" + randomCapitalString(1) + "#");
+    const postal = faker.location.zipCode(randomCapitalString(1) + "#" + randomCapitalString(1) + " #" + randomCapitalString(1) + "#");
     const phoneNumber = faker.helpers.fromRegExp("[1-9][0-9]{2}-[0-9]{3}-[0-9]{4}");
     const email = faker.internet.email();
 
@@ -105,7 +105,7 @@ fs.createReadStream("./data/Medicine_Details.csv")
     const expiry = faker.date.future({ years: 3 });
     const lotNumber = "LOT#" + faker.location.zipCode("#####");
     
-    const description = faker.lorem.paragraph({ max: 5, min: 1 });
+      const description = faker.lorem.paragraph({ max: 7, min: 3 });
     const slug = crypto.randomUUID().replace(/-/g, '');
 
     const medicine = {
@@ -118,7 +118,7 @@ fs.createReadStream("./data/Medicine_Details.csv")
       
       city,
       street,
-      zip,
+      postal,
       phoneNumber,
       email,
       
