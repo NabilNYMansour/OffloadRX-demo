@@ -7,7 +7,6 @@ import { Image } from '@mantine/core';
 import { SelectMedicine } from '@/db/schema';
 import dynamic from 'next/dynamic';
 import { FaTag } from 'react-icons/fa6';
-import { notifications } from '@mantine/notifications';
 import { agoCalculator, formatExpiry, isFavourite, toggleFavourite } from '@/app/utils/helpers';
 import { MdHandshake } from 'react-icons/md';
 import { useRouter } from 'next/navigation';

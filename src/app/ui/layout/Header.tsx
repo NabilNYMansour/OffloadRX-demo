@@ -45,17 +45,17 @@ const Links = ({ pathname, close }: { pathname: string, close?: () => void }) =>
 const ActionIcons = ({ reverse = false }: { reverse?: boolean }) => {
   if (reverse) {
     return <>
-      <div style={{ scale: "1.25", height: "28px" }} >
+      {/* <div style={{ scale: "1.25", height: "28px" }} >
         <Avatar radius="xl" size={28} />
-      </div>
+      </div> */}
       <ThemeToggle />
     </>
   }
   return <>
     <ThemeToggle />
-    <div style={{ scale: "1.25", height: "28px" }} >
+    {/* <div style={{ scale: "1.25", height: "28px" }} >
       <Avatar radius="xl" size={28} />
-    </div>
+    </div> */}
   </>
 };
 const HeaderDrawer = ({ pathname, opened, close }:
