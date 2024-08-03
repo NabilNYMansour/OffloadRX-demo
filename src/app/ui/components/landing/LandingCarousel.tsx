@@ -10,7 +10,7 @@ import PostCard from '../cards/PostCard';
 import classes from "./LandingCarousel.module.css";
 
 const LandingCarousel = () => {
-  const autoplay = useRef(Autoplay({ delay: 5000 }));
+  const autoplay = useRef(Autoplay({ delay: 3000 }));
   const isSmallScreen = useMediaQuery('(max-width: 1300px)');
 
   return (
@@ -22,13 +22,14 @@ const LandingCarousel = () => {
           Here are some examples of what you can find on our platform
         </Text> : null}
       <Carousel
-        withIndicators loop slideGap={10}
+        initialSlide={1}
         classNames={classes}
-        orientation={isSmallScreen ? "horizontal" : 'vertical'}
         withControls={false}
         plugins={[autoplay.current]}
+        withIndicators loop slideGap={10}
         onMouseEnter={autoplay.current.stop}
-        onMouseLeave={autoplay.current.reset}>
+        onMouseLeave={autoplay.current.reset}
+        orientation={isSmallScreen ? "horizontal" : 'vertical'}>
         <Carousel.Slide>
           <PostCard city="Toronto"
             composition="Something 1" name="Medicine Name 1"

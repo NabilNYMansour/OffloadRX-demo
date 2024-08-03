@@ -1,23 +1,33 @@
-"use client";
-
-import { Flex, Text } from '@mantine/core';
-import classes from './Footer.module.css';
-import { usePathname } from 'next/navigation';
+import { Divider, Flex, Text } from '@mantine/core';
+import { SendMessage } from '../components/other/SendMessage';
+import Link from 'next/link';
 
 export function Footer() {
-  const currPath = usePathname();
-
-  if (/\/excalidraw/.test(currPath)) {
-    return null;
-  }
 
   return (
-    <div className={classes.footer}>
-      <Flex direction="column" justify="center" align="center">
-        <Text fz="xs" lh="md">
-          © {new Date().getFullYear()} OffloadRx Inc.
-        </Text>
+    <Flex direction="column" justify="center" align="center"
+      pt="xl" pb="md">
+      <SendMessage />
+
+      <Divider my="md" w="80%" />
+
+      <Flex gap={10}>
+        <Link href='/privacy' style={{ color: "inherit" }}>
+          <Text fz="lg" lh="md">
+            Privacy
+          </Text>
+        </Link>
+
+        <Link href='/terms' style={{ color: "inherit" }}>
+          <Text fz="lg" lh="md">
+            Terms
+          </Text>
+        </Link>
       </Flex>
-    </div>
+
+      <Text fz="xs" lh="md">
+        © {new Date().getFullYear()} OffloadRx Inc.
+      </Text>
+    </Flex>
   );
 }

@@ -34,10 +34,16 @@ const Links = ({ pathname, close }: { pathname: string, close?: () => void }) =>
         Demo
       </Title>
     </Link>
-    <Link href="/about" onClick={close}
-      className={pathname === "/about" ? classes.linkSelected : classes.link}>
-      <Title order={5} c={pathname === "/about" ? "main" : ""}>
-        About
+    <Link href="/pricing" onClick={close}
+      className={pathname === "/pricing" ? classes.linkSelected : classes.link}>
+      <Title order={5} c={pathname === "/pricing" ? "main" : ""}>
+        Pricing
+      </Title>
+    </Link>
+    <Link href="/about-us" onClick={close}
+      className={pathname === "/about-us" ? classes.linkSelected : classes.link}>
+      <Title order={5} c={pathname === "/about-us" ? "main" : ""}>
+        About Us
       </Title>
     </Link>
   </>
@@ -65,7 +71,7 @@ const HeaderDrawer = ({ pathname, opened, close }:
     close: () => void
   }
 ) => {
-  return <Drawer hiddenFrom='sm' position='right' opened={opened} onClose={close}
+  return <Drawer hiddenFrom='md' position='right' opened={opened} onClose={close}
     title={<Group><ActionIcons reverse /></Group>}>
     <Flex direction="column" align="center" gap={25}>
       <Links pathname={pathname} close={close} />
@@ -126,7 +132,7 @@ export function Header() {
       <div ref={headerHover.ref} className={classes.rootHeader}>
         <div className={classes.header} style={slideUp} >
           {/*================= Big Screen =================*/}
-          <Container size="xl" className={classes.inner} visibleFrom='sm'>
+          <Container size="xl" className={classes.inner} visibleFrom='md'>
             <Box w="33%">
               <HeaderTitle />
             </Box>
@@ -141,7 +147,7 @@ export function Header() {
           </Container>
 
           {/*================= Small Screen =================*/}
-          <Container size="xl" className={classes.inner} hiddenFrom='sm'>
+          <Container size="xl" className={classes.inner} hiddenFrom='md'>
             <Box>
               <HeaderTitle />
             </Box>

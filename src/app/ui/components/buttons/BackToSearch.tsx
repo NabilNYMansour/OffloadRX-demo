@@ -11,6 +11,7 @@ const BackToSearch = () => {
     <Flex justify="" w="100%">
       <Button
         variant="subtle"
+        style={{ transition: "all 0.2s" }}
         onClick={() => router.push("/demo")}
         leftSection={<IoIosArrowBack size={20} />}>
         Back to Search
