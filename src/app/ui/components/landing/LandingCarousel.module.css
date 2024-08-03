@@ -1,0 +1,48 @@
+.carousel {
+  overflow-y: hidden;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 20%,
+    black 80%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 20%,
+    black 80%,
+    transparent
+  );
+}
+
+.indicator {
+  background-color: var(--mantine-color-main-filled);
+  transition: opacity 150ms ease;
+  opacity: 0;
+}
+
+.root {
+  &:hover {
+    .indicator {
+      opacity: 0.5;
+      &[data-active] {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@media (max-width: 1300px) {
+  .carousel {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .indicator {
+    opacity: 0.5;
+    &[data-active] {
+      opacity: 1;
+    }
+  }
+}

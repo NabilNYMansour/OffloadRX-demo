@@ -45,7 +45,7 @@ const MainApp = ({ posts, postsCount, currentPage, pagesCount }:
         <Flex direction="column" gap={10} w="100%" align="stretch">
           {posts.length > 0 ?
             posts.map((post) => (
-              <PostCard key={post.id+post.slug} post={post} />
+              <PostCard key={post.id + post.slug} {...post} />
             )) : noPostsFound()}
         </Flex>
 

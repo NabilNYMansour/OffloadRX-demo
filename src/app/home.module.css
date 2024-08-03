@@ -20,10 +20,3 @@
   height: fit-content;
   z-index: 5000;
 }
-
-.highlight {
-  position: relative;
-  background-color: var(--mantine-color-main-light);
-  border-radius: var(--mantine-radius-sm);
-  padding: rem(4px) rem(12px);
-}

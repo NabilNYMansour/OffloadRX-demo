@@ -23,14 +23,11 @@
 .postCard:hover {
   transform: translateY(-3px);
   box-shadow: 0 0 10px var(--mantine-color-main-9);
+  cursor: pointer;
 }
 
 .drawing [class*="App-toolbar"] {
   display: none;
-}
-
-.cardFlex{
-  cursor: pointer;
 }
 
 @media (max-width: 700px) {

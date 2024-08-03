@@ -1,6 +1,5 @@
 "use client";
 
-import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import classes from '@/app/core.module.css';
 import { Button, Card, Checkbox, Flex, Group, NumberInput, Radio, Skeleton, Text, Title } from "@mantine/core";
@@ -162,7 +161,7 @@ const Filters = () => {
 
       <Flex direction="column">
         <Title order={1} ta="center">Filters</Title>
-        <Button
+        <Button radius="md"
           disabled={!canReset(searchParams)}
           onClick={async () => await resetFilters()}
           style={{ transition: "all 0.2s" }}
@@ -193,14 +192,14 @@ const Filters = () => {
         <HiCurrencyDollar />
       </Group>
       <Flex gap={10}>
-        <NumberInput
+        <NumberInput radius="md"
           placeholder="Min"
           prefix="$"
           size={isTouchScreen ? "lg" : "sm"}
           value={priceFrom}
           min={0}
           onChange={setPriceFrom} />
-        <NumberInput
+        <NumberInput radius="md"
           placeholder="Max"
           prefix="$"
           size={isTouchScreen ? "lg" : "sm"}
@@ -218,9 +217,8 @@ const Filters = () => {
         <Text size="xl">Date Posted</Text>
         <FaCalendarDays />
       </Group>
-      <DatePickerInput
-        type="range"
-        value={postedRange}
+      <DatePickerInput radius="md" clearable
+        type="range" value={postedRange}
         onChange={setPostedRange}
         placeholder="Pick Post dates range"
       />
@@ -230,9 +228,8 @@ const Filters = () => {
         <Text size="xl">Expiry</Text>
         <FaCalendarTimes />
       </Group>
-      <DatePickerInput
-        type="range"
-        value={expiryRange}
+      <DatePickerInput radius="md" clearable
+        type="range" value={expiryRange}
         onChange={setExpiryRange}
         placeholder="Pick Expiry dates range"
       />

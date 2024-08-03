@@ -1,7 +1,5 @@
 "use client";
 
-import '@mantine/core/styles.css';
-import '@mantine/dates/styles.css';
 import classes from '@/app/core.module.css';
 import { ActionIcon, Button, Card, Flex, Group, Skeleton, TextInput, Title } from "@mantine/core";
 import dynamic from "next/dynamic";
@@ -15,12 +13,10 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedValue, useMediaQuery } from '@mantine/hooks';
 import { useIsVisible } from '@/app/utils/hooks';
 
-const CustomSearchInput = ({ title, placeholderTitle, icon, value, setValue }:
-  {
-    title: string, placeholderTitle: string, icon: React.ReactNode,
-    value: string, setValue: React.Dispatch<React.SetStateAction<string>>
-  }
-) => {
+const CustomSearchInput = ({ title, placeholderTitle, icon, value, setValue }: {
+  title: string, placeholderTitle: string, icon: React.ReactNode,
+  value: string, setValue: React.Dispatch<React.SetStateAction<string>>
+}) => {
   const isTouchScreen = useMediaQuery('(pointer:coarse)');
   return (
     <TextInput
@@ -142,7 +138,7 @@ const AdvancedSearch = () => {
     <Flex direction="column" w="100%">
       <Flex direction="column">
         <Title order={1} ta="center">Advanced Search</Title>
-        <Button
+        <Button radius="md"
           disabled={!canReset(searchParams)}
           onClick={resetAdvancedSearch}
           style={{ transition: "all 0.2s" }}

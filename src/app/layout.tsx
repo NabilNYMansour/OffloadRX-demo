@@ -4,19 +4,12 @@ import { MantineProvider, ColorSchemeScript } from "@mantine/core";
 import { Header } from "./ui/layout/Header";
 import { Footer } from "./ui/layout/Footer";
 import classes from "./home.module.css";
-import localFont from 'next/font/local';
 import cx from 'clsx';
 import { theme } from "@/theme";
 import { Notifications } from "@mantine/notifications";
 // import { ClerkProvider } from "@clerk/nextjs";
 import { Metadata } from "next";
 import { MAIN_URL } from "@/lib/constants";
-
-// import { Nunito_Sans } from 'next/font/google'
-// const nunito = Nunito_Sans({
-//   weight: '400',
-//   subsets: ['latin'],
-// })
 
 import { Inter } from 'next/font/google'
 const inter = Inter({
