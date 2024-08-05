@@ -6,6 +6,7 @@ import LandingCarousel from './ui/components/landing/LandingCarousel';
 import LandingHero from './ui/components/landing/LandingHero';
 import Faq from './ui/components/landing/Faq';
 import { FeaturesCards } from './ui/components/landing/FeaturesCards';
+import Team from './ui/components/landing/Team';
 
 export default async function HomePage() {
   return (
@@ -15,13 +16,18 @@ export default async function HomePage() {
         <LandingCarousel />
       </Flex>
 
-      <Flex wrap="wrap" w="100%"
-        bg="var(--mantine-color-main-light)" justify="center" align="center">
+      <Flex bg="var(--mantine-color-main-light)"
+        wrap="wrap" w="100%" justify="center" align="center">
         <FeaturesCards />
       </Flex>
 
       <Flex wrap="wrap" w="100%" justify="center" align="center">
         <Faq />
+      </Flex>
+
+      <Flex bg="var(--mantine-color-main-light)"
+        wrap="wrap" w="100%" justify="center" align="center">
+        <Team />
       </Flex>
     </Flex>
   );

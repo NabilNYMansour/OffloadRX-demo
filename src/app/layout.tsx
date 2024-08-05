@@ -11,10 +11,10 @@ import { Notifications } from "@mantine/notifications";
 import { Metadata } from "next";
 import { MAIN_URL } from "@/lib/constants";
 
-import { Inter } from 'next/font/google'
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
+import { Roboto } from 'next/font/google'
+const font = Roboto({
+  weight: "400",
+  subsets: ["latin"],
 })
 
 // TODO - Update the description, title, author, and keywords
@@ -68,7 +68,7 @@ export default function RootLayout({
         <meta name="google-site-verification" content="AMluj1U5uMb5jWgvVl_0_UPmpTVreGhIrB6wiK_1AuQ" />
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=yes" />
       </head>
-      <body className={cx(classes.body, inter.className)}>
+      <body className={cx(classes.body, font.className)}>
         <MantineProvider defaultColorScheme="light" theme={theme}>
           <Notifications className={classes.notifications} />
           <Header />

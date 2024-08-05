@@ -1,0 +1,17 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: rotate 2s linear infinite;
+}
+
+.content {
+  box-shadow: 0 0 0 10px #ffd914;
+  outline: dashed 10px #111111;
+}

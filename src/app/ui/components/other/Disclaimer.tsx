@@ -15,7 +15,7 @@ const Disclaimer = () => {
   } else {
     return (
       <CenterContainer props={{ size: 800, mt: 10 }} >
-        <Card className={classes.slideUp} bg="red" c="white" w="100%"
+        <Card className={classes.slideUp} bg="yellow" c="white" w="100%"
           shadow="sm" radius="md" padding="xl" withBorder>
           <Group justify='center' >
             <IoMdAlert color='yellow' size={45} />

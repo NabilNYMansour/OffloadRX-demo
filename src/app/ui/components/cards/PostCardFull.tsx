@@ -20,7 +20,7 @@ export const PostCardFullSkeleton = () => { // Skeleton will not have favourite 
       {/*============= Image =============*/}
       <Card miw="100%" className={classes.postCardNoHover} shadow="sm" radius="md" padding="lg" withBorder>
         <Flex miw="100%" direction="column" align="center" gap={25}>
-          <Skeleton style={{ borderRadius: "6px" }}
+          <Skeleton style={{ borderRadius: "8px" }}
             maw={size + "px"} h={size + "px"} />
         </Flex>
       </Card >
@@ -59,7 +59,7 @@ const PostCardFull = ({ post }: {
             src={post.imgUrl} alt={post.name}
             fit='scale-down' maw={size} mah={size}
             onLoad={() => setLoaded(true)} />
-          <Skeleton style={{ borderRadius: "6px", display: loaded ? "none" : "block" }}
+          <Skeleton style={{ borderRadius: "8px", display: loaded ? "none" : "block" }}
             maw={size + "px"} h={size + "px"} />
         </Flex>
       </Card >

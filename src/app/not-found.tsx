@@ -13,7 +13,9 @@ export default function NotFound() {
         </Text>
         <Group justify="center">
           <Link key="Home" href="/" className={classes.link}>
-            <Button size="md">
+            <Button
+              style={{ transition: "all 0.2s" }}
+              size="md">
               Take me back to home page
             </Button>
           </Link>

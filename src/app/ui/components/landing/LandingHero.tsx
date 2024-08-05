@@ -3,6 +3,7 @@ import { ActionIcon, Button, Container, Flex, Text, TextInput, Title } from "@ma
 import { RxCross1 } from 'react-icons/rx';
 import classes from "./landing.module.css";
 import CoolButton from '../buttons/CoolButton';
+import StayInTouch from '../other/StayInTouch';
 
 
 const LandingHero = () => {
@@ -23,28 +24,8 @@ const LandingHero = () => {
           and ensure valuable resources are used <Text fw={700} span c="main.9">effectively</Text>.
         </Text>
       </Container>
-      <Flex w="100%" gap={10}>
-        <TextInput
-          pt={10}
-          w="50%"
-          radius="md" size="lg"
-          placeholder={"Name"} />
-        <TextInput
-          pt={10}
-          w="50%"
-          radius="md" size="lg"
-          placeholder={"Email"} />
-      </Flex>
-      <Flex direction="column" w="100%" gap={2}>
-        <Button
-          style={{ transition: "all 0.2s" }}
-          radius="md" w="100%" size='lg'>
-          Let's stay in touch!
-        </Button>
-        <Text size="xs" c="dimmed" ta="center">
-          We'll only send updates about our platform and never share your info with anyone.
-        </Text>
-      </Flex>
+
+      <StayInTouch />
 
       <CoolButton href="/demo"
         style={{

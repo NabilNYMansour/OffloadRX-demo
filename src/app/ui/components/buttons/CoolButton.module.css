@@ -40,7 +40,6 @@
   /* box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.3); */
   box-shadow: 0px 0px 20px 0px var(--mantine-color-main-filled);
   background-color: var(--mantine-color-main-filled);
-
   transition: all 0.3s ease-in-out;
 }
 

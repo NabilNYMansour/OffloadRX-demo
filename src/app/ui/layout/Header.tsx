@@ -40,12 +40,6 @@ const Links = ({ pathname, close }: { pathname: string, close?: () => void }) =>
         Pricing
       </Title>
     </Link>
-    <Link href="/about-us" onClick={close}
-      className={pathname === "/about-us" ? classes.linkSelected : classes.link}>
-      <Title order={5} c={pathname === "/about-us" ? "main" : ""}>
-        About Us
-      </Title>
-    </Link>
   </>
 };
 const ActionIcons = ({ reverse = false }: { reverse?: boolean }) => {
@@ -71,7 +65,7 @@ const HeaderDrawer = ({ pathname, opened, close }:
     close: () => void
   }
 ) => {
-  return <Drawer hiddenFrom='md' position='right' opened={opened} onClose={close}
+  return <Drawer hiddenFrom='sm' position='right' opened={opened} onClose={close}
     title={<Group><ActionIcons reverse /></Group>}>
     <Flex direction="column" align="center" gap={25}>
       <Links pathname={pathname} close={close} />
@@ -132,7 +126,7 @@ export function Header() {
       <div ref={headerHover.ref} className={classes.rootHeader}>
         <div className={classes.header} style={slideUp} >
           {/*================= Big Screen =================*/}
-          <Container size="xl" className={classes.inner} visibleFrom='md'>
+          <Container size="xl" className={classes.inner} visibleFrom='sm'>
             <Box w="33%">
               <HeaderTitle />
             </Box>
@@ -147,7 +141,7 @@ export function Header() {
           </Container>
 
           {/*================= Small Screen =================*/}
-          <Container size="xl" className={classes.inner} hiddenFrom='md'>
+          <Container size="xl" className={classes.inner} hiddenFrom='sm'>
             <Box>
               <HeaderTitle />
             </Box>

@@ -13,7 +13,7 @@ export default function Error({ error, reset }: {
         <div className={classes.label}>500</div>
         <Title className={classes.title}>Something bad just happened... </Title>
         <Text size="lg" ta="center" className={classes.description}>
-          Don&apos;t worry, it&apos;s not from your end. 
+          Don&apos;t worry, it&apos;s not from your end.
           <br />
           Our development team was already notified.
           <br />
@@ -21,6 +21,7 @@ export default function Error({ error, reset }: {
         </Text>
         <Group justify="center">
           <Button size="md"
+            style={{ transition: "all 0.2s" }}
             onClick={
               () => reset()
             }>

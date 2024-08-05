@@ -16,7 +16,7 @@ export const PostCardSkeleton = () => {
   return (
     <Card miw="100%" className={classes.postCardNoHover} shadow="sm" radius="md" padding="lg" withBorder>
       <Flex gap={25} miw="100%" className={classes.cardFlex}>
-        <Skeleton miw={size + "px"} maw={size + "px"} h={size + "px"} style={{ borderRadius: "6px" }} />
+        <Skeleton miw={size + "px"} maw={size + "px"} h={size + "px"} style={{ borderRadius: "8px" }} />
         <Flex direction="column" w="100%">
           <Skeleton height={40} mt={4} mb={4} w="50%" />
           <Skeleton height={70} mt={4} w="60%" />
@@ -69,13 +69,13 @@ const PostCard = ({
         {/*============= Image =============*/}
         <>
           <Flex miw={size + "px"} maw={size + "px"} h={size + "px"} align="center" justify="center"
-            style={{ borderRadius: "6px", overflow: "hidden", display: loaded ? "block" : "none" }}>
+            style={{ borderRadius: "8px", overflow: "hidden", display: loaded ? "block" : "none" }}>
             <Image
               src={imgUrl} alt={name}
               fit='scale-down' width={size} height={size}
               onLoad={() => setLoaded(true)} />
           </Flex>
-          <Skeleton style={{ borderRadius: "6px", display: loaded ? "none" : "block" }}
+          <Skeleton style={{ borderRadius: "8px", display: loaded ? "none" : "block" }}
             miw={size + "px"} maw={size + "px"} h={size + "px"} />
         </>
 
