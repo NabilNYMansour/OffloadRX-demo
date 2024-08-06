@@ -12,10 +12,10 @@ export const theme = createTheme({
       "#00ffac",
       "#00e396",
       "#00ca84",
-      "#00af70"
+      "#00A87C"
     ],
   },
 
   primaryColor: "main",
-  primaryShade: 8,
+  primaryShade: {light: 9, dark: 8},
 });

@@ -19,9 +19,9 @@ const LandingHero = () => {
             className={classes.highlight}>
             secure marketplace
           </Text> for
-          pharmacies to <Text fw={700} span c="main.9">trade</Text> surplus
-          medications, <Text fw={700} span c="main.9">reduce</Text> costs,
-          and ensure valuable resources are used <Text fw={700} span c="main.9">effectively</Text>.
+          pharmacies to <Text fw={700} span c="main">trade</Text> surplus
+          medications, <Text fw={700} span c="main">reduce</Text> costs,
+          and ensure valuable resources are used <Text fw={700} span c="main">effectively</Text>.
         </Text>
       </Container>
 

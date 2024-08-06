@@ -15,7 +15,7 @@ const HeaderTitle = () => {
       <OffloadRx size={40} aria-label="OffloadRx" />
       <Group gap={0}>
         <Title order={1}>OffloadRx</Title>
-        <Text size='xs' fs="italic" style={{ alignSelf: "flex-end" }}>v0.1</Text>
+        {/* <Text size='xs' fs="italic" style={{ alignSelf: "flex-end" }}>v0.1</Text> */}
       </Group>
     </Group>
   </Link>
@@ -24,19 +24,19 @@ const Links = ({ pathname, close }: { pathname: string, close?: () => void }) =>
   return <>
     <Link href="/" onClick={close}
       className={pathname === "/" ? classes.linkSelected : classes.link}>
-      <Title order={5} c={pathname === "/" ? "main" : ""}>
+      <Title order={5} fw={pathname === "/" ? 900 : 700} c={pathname === "/" ? "main" : ""}>
         Home
       </Title>
     </Link>
     <Link href="/demo" onClick={close}
       className={pathname === "/demo" ? classes.linkSelected : classes.link}>
-      <Title order={5} c={pathname === "/demo" ? "main" : ""}>
+      <Title order={5} fw={pathname === "/demo" ? 900 : 700} c={pathname === "/demo" ? "main" : ""}>
         Demo
       </Title>
     </Link>
     <Link href="/pricing" onClick={close}
       className={pathname === "/pricing" ? classes.linkSelected : classes.link}>
-      <Title order={5} c={pathname === "/pricing" ? "main" : ""}>
+      <Title order={5} fw={pathname === "/pricing" ? 900 : 700} c={pathname === "/pricing" ? "main" : ""}>
         Pricing
       </Title>
     </Link>
@@ -131,8 +131,8 @@ export function Header() {
               <HeaderTitle />
             </Box>
 
-            <Group justify='center' gap={25} h="100%" w="33%">
-              <Links pathname={pathname}  />
+            <Group justify='center' gap={40} h="100%" w="33%">
+              <Links pathname={pathname} />
             </Group>
 
             <Group justify='right' align='center' w="33%">
