@@ -12,7 +12,7 @@ export const theme = createTheme({
       "#00ffac",
       "#00e396",
       "#00ca84",
-      "#00A87C"
+      "#00af70"
     ],
   },
 
