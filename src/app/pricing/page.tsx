@@ -38,11 +38,10 @@ const Page = () => {
 
   return (
     <>
-      <Modal centered radius="md"
+      <Modal centered radius="md" trapFocus
         classNames={{
           content: classes.content,
         }}
-
         opened={modalOpened} onClose={modalActions.close}>
         <Flex direction="column" justify="center" align="center" gap={10}>
           <Group justify='center'>
@@ -129,10 +128,12 @@ const Page = () => {
             overflow: "visible"
           }} w={300} shadow="sm" radius="md" padding="lg" bd="2px solid main">
 
-            <Badge style={{ position: "absolute", top: 0, left: 0, transform: "translate(80%, -50%)" }}
-              variant='filled'>
-              Recommended
-            </Badge>
+            <Flex justify="center" w="100%" pos="absolute" left={0} top={0}
+              style={{ transform: "translate(0, -50%)" }}>
+              <Badge variant='filled'>
+                Recommended
+              </Badge>
+            </Flex>
 
             <Flex direction="column" gap={10}>
               <Group gap={5} justify='center'>

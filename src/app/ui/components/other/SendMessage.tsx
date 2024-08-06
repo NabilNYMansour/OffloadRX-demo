@@ -33,7 +33,7 @@ export function SendMessage() {
           Got a question?
         </Title>
         <Text size="xs" c="dimmed" ta="center">
-          Send us a message and we'll get back to you as soon as possible.
+          Send us a message and we&apos;ll get back to you as soon as possible.
         </Text>
 
         <SimpleGrid cols={{ base: 1, sm: 2 }} mt="xl">

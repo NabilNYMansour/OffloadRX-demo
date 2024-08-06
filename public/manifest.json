@@ -1,15 +1,7 @@
 {
-  "name": "Excalihub",
-  "short_name": "Excalihub",
+  "name": "OffloadRx",
+  "short_name": "OffloadRx",
   "start_url": "/",
-  "display": "standalone",
-  "icons": [
-    {
-      "src" : "excalihub.png",
-      "sizes": "600x600",
-      "type": "image/png"
-    }
-  ],
-  "background_color": "#000000",
+  "background_color": "#ffffff",
   "theme_color": "#000000"
 }

@@ -71,7 +71,7 @@ const membersData = [
     name: "Nabil Mansour",
     title: "Founder & CTO",
     description: `
-      Nabil is a software engineer with and the creator of platforms like Excalihub
+      Nabil is a software engineer and the creator of platforms like Excalihub
       He is the technical lead at OffloadRx.
       Loves Ping Pong but is bad at it.
     `

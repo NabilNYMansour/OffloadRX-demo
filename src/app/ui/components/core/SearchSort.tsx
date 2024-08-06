@@ -1,6 +1,6 @@
 "use client";
 
-import { Divider, Flex, Group, Modal, Select, Skeleton, Text, ThemeIcon } from "@mantine/core";
+import { Divider, Flex, Group, Modal, Popover, Select, Skeleton, Text, ThemeIcon } from "@mantine/core";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { ActionIcon, TextInput } from '@mantine/core';
@@ -13,6 +13,7 @@ import classes from '@/app/core.module.css';
 import cx from 'clsx';
 import { AdvancedSearchDynamic } from "./AdvancedSearch";
 import { FiltersDynamic } from "./Filters";
+import { FaQuestionCircle } from "react-icons/fa";
 
 const SearchSortSkeleton = () => {
   return (
@@ -127,31 +128,47 @@ const SearchSort = ({ count }: { count: number }) => {
       </Modal>
 
       <Flex direction="column" w="100%" gap={10}>
-        {/*============= Search Posts =============*/}
-        <TextInput
-          className={classes.slideUp}
-          size="lg"
-          radius="md"
-          value={searchValue}
-          placeholder='Search Posts'
-          leftSection={<FaMagnifyingGlass />}
-          rightSection={
-            <ActionIcon variant='subtle' radius="xl"
-              aria-label="Clear input"
-              onClick={() => setSearchValue("")}
-              style={{ display: searchValue ? undefined : 'none' }}>
-              <RxCross1 />
-            </ActionIcon>
-          }
-          onChange={(event) => setSearchValue(event.currentTarget.value)}
-        />
+        {/*============= Search Posts and ? =============*/}
+        <Flex gap={10} align="center" className={classes.slideUp}>
+
+          <Popover width={300} position="bottom" withArrow shadow="md">
+            <Popover.Target>
+              <ActionIcon size="lg" radius="md" aria-label="What is this">
+                <FaQuestionCircle size={20} />
+              </ActionIcon>
+            </Popover.Target>
+            <Popover.Dropdown>
+              <Text size="sm" ta="center">
+                This is a demo of how the application would look like. You can search for posts, filter them, and sort them. It showcases the functionality of the platform and gives you an idea of how the final product will look and behave.
+              </Text>
+            </Popover.Dropdown>
+          </Popover>
+
+          <TextInput
+            flex={1}
+            size="lg"
+            radius="md"
+            value={searchValue}
+            placeholder='Search Posts'
+            leftSection={<FaMagnifyingGlass />}
+            rightSection={
+              <ActionIcon variant='subtle' radius="xl"
+                aria-label="Clear input"
+                onClick={() => setSearchValue("")}
+                style={{ display: searchValue ? undefined : 'none' }}>
+                <RxCross1 />
+              </ActionIcon>
+            }
+            onChange={(event) => setSearchValue(event.currentTarget.value)}
+          />
+        </Flex>
         {/*============= Search Settings =============*/}
         <Flex justify="space-between" align="center" className={classes.slideUp}>
 
           {/*============= Filter Posts Button | count =============*/}
           {screenSmall ?
-            <ActionIcon size="lg"
-              aria-label="Filter posts"
+            <ActionIcon aria-label="Filter posts"
+              size="lg" radius="md"
               className={cx(classes.filterButton, classes.shake)}
               onClick={modalActions.open}>
               <IoSettingsSharp />

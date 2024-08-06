@@ -38,7 +38,7 @@ const MainApp = ({ posts, postsCount, currentPage, pagesCount }:
       </Box>
 
       <CenterContainer props={{ size: 800 }}>
-        {/*============= Search =============*/}
+        {/*============= Search And ? =============*/}
         <SearchSort count={postsCount} />
 
         {/*============= Posts =============*/}

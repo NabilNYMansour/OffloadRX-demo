@@ -10,6 +10,51 @@ import { Flex, Group, NumberFormatter, Text, Title } from "@mantine/core";
 import { notFound } from "next/navigation";
 import { FaTag } from "react-icons/fa6";
 import { MdHandshake } from "react-icons/md";
+import { Metadata } from 'next';
+import { MAIN_URL } from '@/lib/constants';
+
+export async function generateMetadata(
+  { params }: { params: { slug: string } }
+): Promise<Metadata> {
+  const postQuery: SelectMedicine[] = await getMedicineBySlug(params.slug);
+
+  if (postQuery.length === 0) {
+    notFound();
+  }
+
+  const post = postQuery[0];
+  const postedAgoString = agoCalculator(Math.floor((new Date().getTime() - post.datePosted.getTime()) / (1000 * 60 * 60 * 24)));
+
+  const title = post.name + " in OffloadRx";
+  const description = `${post.name} ${post.forSale ? "for sale" : "wanted"} in OffloadRx. ${post.price ? "Price: $" + post.price : "Please contact"} posted ${postedAgoString} ago.`;
+  const imageLink = post.imgUrl;
+
+  return {
+    title: title,
+    description: description,
+    alternates: {
+      canonical: `${MAIN_URL}/excalidraw/${params.slug}`
+    },
+    openGraph: {
+      title: title,
+      description: description,
+      url: `${MAIN_URL}/excalidraw/${params.slug}`,
+      type: "website",
+      images: [
+        {
+          url: imageLink,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: title,
+      description: description,
+      images: imageLink,
+    },
+  }
+}
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const postQuery: SelectMedicine[] = await getMedicineBySlug(params.slug);
@@ -19,9 +64,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
   const post = postQuery[0];
-
-  const datePosted = new Date(post.datePosted);
-  const postedAgoString = agoCalculator(Math.floor((new Date().getTime() - datePosted.getTime()) / (1000 * 60 * 60 * 24)));
+  const postedAgoString = agoCalculator(Math.floor((new Date().getTime() - post.datePosted.getTime()) / (1000 * 60 * 60 * 24)));
 
   return (
     <CenterContainer props={{ size: 1000, pt: 10 }}>

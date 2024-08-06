@@ -17,42 +17,41 @@ const font = Roboto({
   subsets: ["latin"],
 })
 
-// TODO - Update the description, title, author, and keywords
-// const description = "...";
-// const title = "OffloadRx";
-// const author = "Nabil Mansour";
-// const keywords = "...";
-// const imageLink = `${MAIN_URL}/ExcalihubLogoTitle.png`;
+const description = "OffloadRx is a A secure marketplace for pharmacies to trade surplus medications, reduce costs, and ensure valuable resources are used effectively.";
+const title = "OffloadRx";
+const author = "Nabil Mansour";
+const keywords = "OffloadRx, Pharmacy, Medication, Marketplace, Surplus, Trade, Reduce Costs, Secure, Effective, Resources";
+const imageLink = `${MAIN_URL}/banner.png`;
 
-// export const metadata: Metadata = {
-//   title: {
-//     default: title,
-//     template: "%s | " + title,
-//   },
-//   description: description,
-//   alternates: {
-//     canonical: `${MAIN_URL}`
-//   },
-//   keywords: keywords,
-//   openGraph: {
-//     title: title,
-//     description: description,
-//     url: `${MAIN_URL}`,
-//     type: "website",
-//     images: [{ url: imageLink, alt: title, }],
-//     locale: 'en_US',
-//   },
-//   twitter: {
-//     card: "summary_large_image",
-//     title: title,
-//     description: description,
-//     images: [imageLink],
-//   },
-//   authors: { name: author },
-//   creator: author,
-//   publisher: author,
-//   manifest: `${MAIN_URL}/manifest.json`,
-// };
+export const metadata: Metadata = {
+  title: {
+    default: title,
+    template: "%s | " + title,
+  },
+  description: description,
+  alternates: {
+    canonical: `${MAIN_URL}`
+  },
+  keywords: keywords,
+  openGraph: {
+    title: title,
+    description: description,
+    url: `${MAIN_URL}`,
+    type: "website",
+    images: [{ url: imageLink, alt: title, }],
+    locale: 'en_US',
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: title,
+    description: description,
+    images: [imageLink],
+  },
+  authors: { name: author },
+  creator: author,
+  publisher: author,
+  manifest: `${MAIN_URL}/manifest.json`,
+};
 
 export default function RootLayout({
   children,
