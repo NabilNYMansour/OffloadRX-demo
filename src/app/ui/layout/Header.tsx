@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
-import { Avatar, Box, Burger, Container, Drawer, Flex, Group, Text, Title } from '@mantine/core';
+import {  Box, Burger, Container, Drawer, Flex, Group, Title } from '@mantine/core';
 import { useDisclosure, useHover } from '@mantine/hooks';
 import { ThemeToggle } from '../components/buttons/ThemeToggle';
 import classes from './Header.module.css';
@@ -48,11 +48,11 @@ const ActionIcons = ({ reverse = false }: { reverse?: boolean }) => {
       {/* <div style={{ scale: "1.25", height: "28px" }} >
         <Avatar radius="xl" size={28} />
       </div> */}
-      <ThemeToggle />
+      <ThemeToggle radius='md'/>
     </>
   }
   return <>
-    <ThemeToggle />
+    <ThemeToggle radius='md'/>
     {/* <div style={{ scale: "1.25", height: "28px" }} >
       <Avatar radius="xl" size={28} />
     </div> */}
