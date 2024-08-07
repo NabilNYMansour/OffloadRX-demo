@@ -55,7 +55,7 @@ const Page = () => {
           <Text size='sm' ta="center">
             Stay tuned for updates.
           </Text>
-          <StayInTouch />
+          <StayInTouch close={modalActions.close}/>
         </Flex>
       </Modal>
 

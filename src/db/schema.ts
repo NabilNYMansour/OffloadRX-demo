@@ -1,6 +1,6 @@
 import { integer, real, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
-export const medicineTable = sqliteTable('users', {
+export const medicineTable = sqliteTable('medicine', {
   id: integer('id').primaryKey(),
 
   name: text('name').notNull(), // Medicine Name
@@ -27,3 +27,22 @@ export const medicineTable = sqliteTable('users', {
 
 export type InsertMedicine = typeof medicineTable.$inferInsert;
 export type SelectMedicine = typeof medicineTable.$inferSelect;
+
+export const emailTable = sqliteTable('email', {
+  id: integer('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull().unique(),
+});
+
+export type InsertEmail = typeof emailTable.$inferInsert;
+export type SelectEmail = typeof emailTable.$inferSelect;
+
+export const messageTable = sqliteTable('message', {
+  id: integer('id').primaryKey(),
+  emailId: integer('email_id').notNull().references(() => emailTable.id),
+  subject: text('subject').notNull(),
+  message: text('message').notNull(),
+});
+
+export type InsertMessage = typeof messageTable.$inferInsert;
+export type SelectMessage = typeof messageTable.$inferSelect;

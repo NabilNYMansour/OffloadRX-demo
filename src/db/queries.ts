@@ -1,10 +1,11 @@
 "use server";
 
-import { and, asc, between, count, desc, eq, gt, gte, like, lte, or, sql } from 'drizzle-orm';
-import { medicineTable, SelectMedicine } from './schema';
+import { and, asc, between, count, desc, eq, gte, like, lte, or } from 'drizzle-orm';
+import { medicineTable, SelectMedicine, emailTable, messageTable } from './schema';
 import { db } from '.';
 import { AdvancedSearchParams, FiltersParams, GeneralParams } from '@/lib/types';
 
+//================== Medicine ==================// 
 export async function getMedicineById(id: SelectMedicine['id']) {
   return await db.select().from(medicineTable).where(eq(medicineTable.id, id))
 }
@@ -13,7 +14,7 @@ export async function getMedicineBySlug(slug: SelectMedicine['slug']) {
   return await db.select().from(medicineTable).where(eq(medicineTable.slug, slug))
 }
 
-//================== General Search ==================//
+//------- General Search -------//
 const whereFunc = (searchTerm: string) => or(
   like(medicineTable.name, `%${searchTerm}%`),
   like(medicineTable.composition, `%${searchTerm}%`),
@@ -24,7 +25,7 @@ const whereFunc = (searchTerm: string) => or(
   like(medicineTable.lotNumber, `%${searchTerm}%`),
 )
 
-//================== Filters ==================//
+//------- Filters -------//
 const forSaleFunc = (type: string) => {
   const forSale = type === "selling" ? true : type === "wanted" ? false : null;
   if (forSale !== null) {
@@ -73,7 +74,7 @@ const filtersFunc = (filtersParams: FiltersParams) => {
   )
 }
 
-//================== Advanced Search ==================//
+//------- Advanced Search -------//
 const advancedSearchFunc = (advancedSearchParams: AdvancedSearchParams) => {
   return and(
     like(medicineTable.name, `%${advancedSearchParams.name}%`),
@@ -84,7 +85,7 @@ const advancedSearchFunc = (advancedSearchParams: AdvancedSearchParams) => {
   )
 }
 
-//================== Sorting ==================//
+//------- Sorting -------//
 const orderByFunc = (sort: string) => {
   switch (sort) {
     case "price":
@@ -133,4 +134,18 @@ export async function getMedicineCount(
         advancedSearchFunc(advancedSearchParams)
       )
     )
+}
+
+//================== Email ==================//
+export async function createEmail(name: string, email: string) {
+  return await db.insert(emailTable).values({ name, email });
+}
+
+export async function getEmail(email: string) {
+  return await db.select().from(emailTable).where(eq(emailTable.email, email));
+}
+
+//================== Message ==================//
+export async function createMessage(emailId: number, subject: string, message: string) {
+  await db.insert(messageTable).values({ emailId, subject, message });
 }

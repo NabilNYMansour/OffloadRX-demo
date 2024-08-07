@@ -52,7 +52,7 @@ const betterSqlite = new Database('.sqlite.db');
 const db = drizzle(betterSqlite);
 
 console.log("migrator> Creating table object");
-const medicineTable = sqliteTable('users', {
+const medicineTable = sqliteTable('medicine', {
   id: integer('id').primaryKey(),
 
   name: text('name').notNull(), // Medicine Name

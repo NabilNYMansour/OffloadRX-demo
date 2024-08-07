@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import CenterContainer from '../core/CenterContainer';
-import { ActionIcon, Anchor, Card, Group, Text } from '@mantine/core';
+import { ActionIcon, Anchor, Card, Flex, Group, Text } from '@mantine/core';
 import classes from '@/app/core.module.css';
 import { IoMdAlert } from 'react-icons/io';
 import { RxCross1 } from 'react-icons/rx';
@@ -16,17 +16,19 @@ const Disclaimer = () => {
     return (
       <CenterContainer props={{ size: 800, mt: 10 }} >
         <Card className={classes.slideUp} bg="yellow" c="white" w="100%"
-          shadow="sm" radius="md" padding="xl" withBorder>
-          <Group justify='center' >
+          shadow="sm" radius="md" padding="md" withBorder>
+          <Flex align='center' direction="column" gap={10}>
             <IoMdAlert color='yellow' size={45} />
             <Text size='xl' ta="center">
               This data is for demonstration purposes only and is taken
-              from <Anchor c={"yellow"}
+              from <Anchor c={"white"} underline='always' target='_blank'
                 href="https://www.kaggle.com/datasets/singhnavjot2062001/11000-medicine-details?resource=download">
                 Kaggle
-              </Anchor>
+              </Anchor>.
+              <br/>
+              Also, the prices are not real and randomally generated.
             </Text>
-          </Group>
+          </Flex>
 
           <ActionIcon variant='subtle' color='white' radius="xl"
             aria-label="Close Disclaimer"
