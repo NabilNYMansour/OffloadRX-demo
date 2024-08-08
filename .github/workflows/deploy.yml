@@ -26,4 +26,5 @@ jobs:
             # pm2 restart all
             # pm2 save
             ls
+            ls
             exit
