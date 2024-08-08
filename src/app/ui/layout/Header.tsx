@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
-import {  Box, Burger, Container, Drawer, Flex, Group, Title } from '@mantine/core';
+import { Box, Burger, Container, Drawer, Flex, Group, Text, Title } from '@mantine/core';
 import { useDisclosure, useHover } from '@mantine/hooks';
 import { ThemeToggle } from '../components/buttons/ThemeToggle';
 import classes from './Header.module.css';
@@ -48,11 +48,11 @@ const ActionIcons = ({ reverse = false }: { reverse?: boolean }) => {
       {/* <div style={{ scale: "1.25", height: "28px" }} >
         <Avatar radius="xl" size={28} />
       </div> */}
-      <ThemeToggle radius='md'/>
+      <ThemeToggle radius='md' />
     </>
   }
   return <>
-    <ThemeToggle radius='md'/>
+    <ThemeToggle radius='md' />
     {/* <div style={{ scale: "1.25", height: "28px" }} >
       <Avatar radius="xl" size={28} />
     </div> */}
@@ -117,7 +117,7 @@ export function Header() {
     setScrollDir("up");
   }, [headerHover.hovered]);
   const slideUp = {
-    transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-80%)',
+    transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-90%)',
     transition: "transform ease 0.25s"
   };
 
@@ -125,6 +125,13 @@ export function Header() {
     <header>
       <div ref={headerHover.ref} className={classes.rootHeader}>
         <div className={classes.header} style={slideUp} >
+          {/*================= Updates =================*/}
+          <Flex direction="column">
+            <Text ta="center" bg="black" size="xl" c="white" p={5}>
+              🚧 The website is under construction. Please report any issues. 🚧
+            </Text>
+          </Flex>
+
           {/*================= Big Screen =================*/}
           <Container size="xl" className={classes.inner} visibleFrom='sm'>
             <Box w="33%">
