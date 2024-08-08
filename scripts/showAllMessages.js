@@ -1,8 +1,7 @@
-var fs = require('fs');
 const { drizzle } = require('drizzle-orm/better-sqlite3');
 const Database = require('better-sqlite3');
 const { integer, sqliteTable, text } = require('drizzle-orm/sqlite-core');
-const { count, eq } = require('drizzle-orm');
+const { eq } = require('drizzle-orm');
 
 const betterSqlite = new Database('.sqlite.db');
 const db = drizzle(betterSqlite);
