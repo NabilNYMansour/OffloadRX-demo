@@ -17,14 +17,12 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           # Will assume basic setup has been done on the server
           script: |
-            # cd excalihub
-            # git pull
-            # export NVM_DIR=~/.nvm
-            # source ~/.nvm/nvm.sh
-            # npm i
-            # npm run build
-            # pm2 restart all
-            # pm2 save
-            ls
-            ls
+            cd OffloadRX-demo
+            git pull
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            yarn
+            yarn build
+            pm2 restart all
+            pm2 save
             exit
