@@ -1,5 +1,5 @@
 {
-  "name": "offloadRx",
+  "name": "offloadrx",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,7 +10,9 @@
     "drizzle:generate": "drizzle-kit generate",
     "drizzle:migrate": "drizzle-kit migrate",
     "drizzle:studio": "drizzle-kit studio",
-    "redoDB": "rm -rf ./src/db/migrations/; rm -rf ./.sqlite.db; yarn drizzle:generate; yarn drizzle:migrate; node ./scripts/migrator.js"
+    "redoDB": "rm -rf ./src/db/migrations/; rm -rf ./.sqlite.db; yarn drizzle:generate; yarn drizzle:migrate; node ./scripts/migrator.js",
+    "emails": "node ./scripts/showAllEmails.js",
+    "messages": "node ./scripts/showAllMessages.js"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.2.2",
