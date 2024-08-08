@@ -5,7 +5,7 @@ import { medicineTable, SelectMedicine, emailTable, messageTable } from './schem
 import { db } from '.';
 import { AdvancedSearchParams, FiltersParams, GeneralParams } from '@/lib/types';
 
-//================== Medicine ==================// 
+//================== Medicine ==================//
 export async function getMedicineById(id: SelectMedicine['id']) {
   return await db.select().from(medicineTable).where(eq(medicineTable.id, id))
 }
