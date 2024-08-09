@@ -73,7 +73,7 @@ const HeaderDrawer = ({ pathname, opened, close }:
   </Drawer>
 };
 
-export function Header() {
+export function Header({ justForHeight }: { justForHeight?: boolean }) {
   const [isHeaderVisible, setHeaderVisible] = useState(true);
   const [checkHeader, setCheckHeader] = useState(true);
   const [scrollDir, setScrollDir] = useState<'up' | 'down'>('up');
@@ -123,7 +123,7 @@ export function Header() {
 
   return (
     <header>
-      <div ref={headerHover.ref} className={classes.rootHeader}>
+      <div ref={headerHover.ref} className={justForHeight ? classes.notVisible : classes.rootHeader}>
         <div className={classes.header} style={slideUp} >
           {/*================= Updates =================*/}
           <Flex direction="column">

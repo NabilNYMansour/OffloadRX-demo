@@ -35,16 +35,16 @@ const MemberCard = ({
           </Text>
         </Flex>
         <Group gap={10}>
-          <ActionIcon variant='subtle' color='main' radius="xl" size="lg" aria-label="Website">
+          <ActionIcon disabled variant='subtle' color='main' radius="xl" size="lg" aria-label="Website">
             <FaLink size={20} />
           </ActionIcon>
-          <ActionIcon variant='subtle' color='main' radius="xl" size="lg" aria-label="Email">
+          <ActionIcon disabled variant='subtle' color='main' radius="xl" size="lg" aria-label="Email">
             <FaEnvelope size={20} />
           </ActionIcon>
-          <ActionIcon variant='subtle' color='main' radius="xl" size="lg" aria-label="Twitter">
+          <ActionIcon disabled variant='subtle' color='main' radius="xl" size="lg" aria-label="Twitter">
             <FaTwitter size={20} />
           </ActionIcon>
-          <ActionIcon variant='subtle' color='main' radius="xl" size="lg" aria-label="LinkedIn">
+          <ActionIcon disabled variant='subtle' color='main' radius="xl" size="lg" aria-label="LinkedIn">
             <FaLinkedin size={20} />
           </ActionIcon>
         </Group>

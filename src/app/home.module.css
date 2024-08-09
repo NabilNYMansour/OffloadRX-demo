@@ -7,7 +7,6 @@
 }
 
 .app {
-  padding-top: 113px; /* Change according to the height of the updates */
   flex-grow: 1;
   display: flex;
 }

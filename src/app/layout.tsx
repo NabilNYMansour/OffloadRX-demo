@@ -70,7 +70,8 @@ export default function RootLayout({
       <body className={cx(classes.body, font.className)}>
         <MantineProvider defaultColorScheme="light" theme={theme}>
           <Notifications className={classes.notifications} />
-          <Header />
+          <Header justForHeight />
+          <Header  />
           <div className={classes.app}>
             {children}
           </div>
