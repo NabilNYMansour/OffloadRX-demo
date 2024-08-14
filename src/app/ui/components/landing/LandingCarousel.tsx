@@ -8,8 +8,9 @@ import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
 import PostCard from '../cards/PostCard';
 import classes from "./LandingCarousel.module.css";
+import { SelectMedicine } from '@/db/schema';
 
-const LandingCarousel = () => {
+const LandingCarousel = ({ randomMeds }: { randomMeds: SelectMedicine[] }) => {
   const autoplay = useRef(Autoplay({ delay: 3000 }));
   const isSmallScreen = useMediaQuery('(max-width: 1300px)');
 
@@ -32,45 +33,19 @@ const LandingCarousel = () => {
             onMouseEnter={autoplay.current.stop}
             onMouseLeave={autoplay.current.reset}
             orientation="horizontal">
-            <Carousel.Slide>
-              <PostCard city="Toronto"
-                composition="Something 1" name="Medicine Name 1"
-                description="This is a description.This is a description.This is a description.This is a descriptionThis is a description"
-                expiry={new Date()} forSale={true}
-                imgUrl="https://via.placeholder.com/250"
-                lotNumber="123456" price={100}
-                datePosted={new Date()} />
-            </Carousel.Slide>
-
-            <Carousel.Slide>
-              <PostCard city="Toronto"
-                composition="Something 1" name="Medicine Name 1"
-                description="This is a description"
-                expiry={new Date()} forSale={true}
-                imgUrl="https://via.placeholder.com/250"
-                lotNumber="123456" price={100}
-                datePosted={new Date()} />
-            </Carousel.Slide>
-
-            <Carousel.Slide>
-              <PostCard city="Toronto"
-                composition="Something 1" name="Medicine Name 1"
-                description="This is a description"
-                expiry={new Date()} forSale={true}
-                imgUrl="https://via.placeholder.com/250"
-                lotNumber="123456" price={100}
-                datePosted={new Date()} />
-            </Carousel.Slide>
-
-            <Carousel.Slide>
-              <PostCard city="Toronto"
-                composition="Something 1" name="Medicine Name 1"
-                description="This is a description"
-                expiry={new Date()} forSale={true}
-                imgUrl="https://via.placeholder.com/250"
-                lotNumber="123456" price={100}
-                datePosted={new Date()} />
-            </Carousel.Slide>
+            {
+              randomMeds.map((med, i) => (
+                <Carousel.Slide key={i}>
+                  <PostCard city={med.city}
+                    composition={med.composition} name={med.name}
+                    description={med.description}
+                    expiry={med.expiry} forSale={med.forSale}
+                    imgUrl={med.imgUrl}
+                    lotNumber={med.lotNumber} price={med.price}
+                    datePosted={med.datePosted} />
+                </Carousel.Slide>
+              ))
+            }
           </Carousel>
         </> :
         <Carousel
@@ -82,45 +57,19 @@ const LandingCarousel = () => {
           onMouseEnter={autoplay.current.stop}
           onMouseLeave={autoplay.current.reset}
           orientation='vertical'>
-          <Carousel.Slide>
-            <PostCard city="Toronto"
-              composition="Something 1" name="Medicine Name 1"
-              description="This is a description.This is a description.This is a description.This is a descriptionThis is a description"
-              expiry={new Date()} forSale={true}
-              imgUrl="https://via.placeholder.com/250"
-              lotNumber="123456" price={100}
-              datePosted={new Date()} />
-          </Carousel.Slide>
-
-          <Carousel.Slide>
-            <PostCard city="Toronto"
-              composition="Something 1" name="Medicine Name 1"
-              description="This is a description"
-              expiry={new Date()} forSale={true}
-              imgUrl="https://via.placeholder.com/250"
-              lotNumber="123456" price={100}
-              datePosted={new Date()} />
-          </Carousel.Slide>
-
-          <Carousel.Slide>
-            <PostCard city="Toronto"
-              composition="Something 1" name="Medicine Name 1"
-              description="This is a description"
-              expiry={new Date()} forSale={true}
-              imgUrl="https://via.placeholder.com/250"
-              lotNumber="123456" price={100}
-              datePosted={new Date()} />
-          </Carousel.Slide>
-
-          <Carousel.Slide>
-            <PostCard city="Toronto"
-              composition="Something 1" name="Medicine Name 1"
-              description="This is a description"
-              expiry={new Date()} forSale={true}
-              imgUrl="https://via.placeholder.com/250"
-              lotNumber="123456" price={100}
-              datePosted={new Date()} />
-          </Carousel.Slide>
+          {
+            randomMeds.map((med, i) => (
+              <Carousel.Slide key={i}>
+                <PostCard city={med.city}
+                  composition={med.composition} name={med.name}
+                  description={med.description}
+                  expiry={med.expiry} forSale={med.forSale}
+                  imgUrl={med.imgUrl}
+                  lotNumber={med.lotNumber} price={med.price}
+                  datePosted={med.datePosted} />
+              </Carousel.Slide>
+            ))
+          }
         </Carousel>
       }
     </Flex>

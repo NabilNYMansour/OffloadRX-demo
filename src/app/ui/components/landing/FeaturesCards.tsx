@@ -14,25 +14,27 @@ import {
 import classes from "./FeaturesCards.module.css";
 import { FaCookie } from "react-icons/fa";
 import { FaGaugeHigh, FaUser } from "react-icons/fa6";
+import { SiMaterialdesignicons } from "react-icons/si";
+import { GrSecure } from "react-icons/gr";
 
 const mockdata = [
   {
-    title: "Extreme performance",
+    title: "Modern design",
     description:
-      "This dust is actually a powerful poison that will even make a pro wrestler sick, Regice cloaks itself with frigid air of -328 degrees Fahrenheit",
-    icon: FaGaugeHigh,
+    "OffloadRx is designed with the latest technologies to ensure that you have a seamless experience.",
+    icon: SiMaterialdesignicons,
   },
   {
-    title: "Privacy focused",
+    title: "User friendly",
     description:
-      "People say it can run at the same speed as lightning striking, Its icy body is so cold, it will not melt even if it is immersed in magma",
+    "We have made the marketplace as user friendly as possible to ensure that you have a great experience.",
     icon: FaUser,
   },
   {
-    title: "No third parties",
+    title: "Secure",
     description:
-      "They're popular, but they're rare. Trainers who show them off recklessly may be targeted by thieves",
-    icon: FaCookie,
+    "We use the latest security protocols to ensure that your information is safe and secure.",
+    icon: GrSecure,
   },
 ];
 
@@ -61,8 +63,8 @@ export function FeaturesCards() {
       </Title>
 
       <Text c="dimmed" className={classes.description} ta="center" mt="md">
-        Every once in a while, you&apos;ll see a Golbat that&apos;s missing some fangs. This happens when
-        hunger drives it to try biting a Steel-type Pokémon.
+        Why allow your resources to go to waste when you can make the most of them? OffloadRx provides a marketplace for pharmacies to connect and share resources.
+        Reducing waste and helping patients get the medications they need.
       </Text>
 
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" mt={50}>

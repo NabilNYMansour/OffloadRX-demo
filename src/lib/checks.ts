@@ -1,7 +1,5 @@
 import { z } from 'zod';
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 export const emailSchema = z.object({
   name: z.string().min(2).max(255),
   email: z.string().min(2).max(255).email(),

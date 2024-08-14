@@ -1,8 +1,7 @@
+"use client";
+
 import { Container, Title, Accordion } from '@mantine/core';
 import classes from './Faq.module.css';
-
-const placeholder =
-  'It can’t help but hear a pin drop from over half a mile away, so it lives deep in the mountains where there aren’t many people or Pokémon.It was born from sludge on the ocean floor. In a sterile environment, the germs within its body can’t multiply, and it dies.It has no eyeballs, so it can’t see. It checks its surroundings via the ultrasonic waves it emits from its mouth.';
 
 export default function Faq() {
   return (
@@ -13,28 +12,42 @@ export default function Faq() {
 
       <Accordion variant="separated">
         <Accordion.Item className={classes.item} value="reset-password">
-          <Accordion.Control>How can I reset my password?</Accordion.Control>
-          <Accordion.Panel>{placeholder}</Accordion.Panel>
+          <Accordion.Control>Is anyone allowed to join the marketplace?</Accordion.Control>
+          <Accordion.Panel>
+            No, only pharmacies registered in the Ontario College of Pharmacists would be allowed to have access. 
+            We will be verifying the pharmacy license number before allowing access to the marketplace.
+            </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="another-account">
           <Accordion.Control>Can I create more that one account?</Accordion.Control>
-          <Accordion.Panel>{placeholder}</Accordion.Panel>
+          <Accordion.Panel>
+            No, only one account per pharmacy is allowed. But once you have an account, you can add multiple users to the account.
+          </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="newsletter">
-          <Accordion.Control>How can I subscribe to monthly newsletter?</Accordion.Control>
-          <Accordion.Panel>{placeholder}</Accordion.Panel>
+          <Accordion.Control>
+            Will you handle the shipping of the products?
+          </Accordion.Control>
+          <Accordion.Panel>
+            Due to various regulations, we will not be handling the shipping of the products. We simply connect the pharmacies together
+            and the rest is up to the pharmacies to handle.
+          </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="credit-card">
           <Accordion.Control>Do you store credit card information securely?</Accordion.Control>
-          <Accordion.Panel>{placeholder}</Accordion.Panel>
+          <Accordion.Panel>
+            All credit card information is stored securely and encrypted. We use the latest security protocols to ensure that your information is safe.
+          </Accordion.Panel>
         </Accordion.Item>
 
         <Accordion.Item className={classes.item} value="payment">
-          <Accordion.Control>What payment systems to you work with?</Accordion.Control>
-          <Accordion.Panel>{placeholder}</Accordion.Panel>
+          <Accordion.Control>What payment systems do you work with?</Accordion.Control>
+          <Accordion.Panel>
+            We use Stripe to handle all payments. Stripe is a secure and reliable payment system that is used by many companies around the world.
+          </Accordion.Panel>
         </Accordion.Item>
       </Accordion>
     </Container>

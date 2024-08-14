@@ -1,6 +1,6 @@
 "use server";
 
-import { and, asc, between, count, desc, eq, gte, like, lte, or } from 'drizzle-orm';
+import { and, asc, between, count, desc, eq, gte, like, lte, or, sql } from 'drizzle-orm';
 import { medicineTable, SelectMedicine, emailTable, messageTable } from './schema';
 import { db } from '.';
 import { AdvancedSearchParams, FiltersParams, GeneralParams } from '@/lib/types';
@@ -8,6 +8,13 @@ import { AdvancedSearchParams, FiltersParams, GeneralParams } from '@/lib/types'
 //================== Medicine ==================//
 export async function getMedicineById(id: SelectMedicine['id']) {
   return await db.select().from(medicineTable).where(eq(medicineTable.id, id))
+}
+
+export async function getRandomMedicine(limit: number) {
+  const maxNum = await db.select({ count: count() }).from(medicineTable);
+  let randomNum = Math.floor(Math.random() * maxNum[0].count);
+  randomNum = Math.max(randomNum - limit, 0); 
+  return await db.select().from(medicineTable).limit(limit).offset(randomNum);
 }
 
 export async function getMedicineBySlug(slug: SelectMedicine['slug']) {

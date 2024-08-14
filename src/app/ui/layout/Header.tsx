@@ -126,11 +126,11 @@ export function Header({ justForHeight }: { justForHeight?: boolean }) {
       <div ref={headerHover.ref} className={justForHeight ? classes.notVisible : classes.rootHeader}>
         <div className={classes.header} style={slideUp} >
           {/*================= Updates =================*/}
-          <Flex direction="column">
+          {/* <Flex direction="column">
             <Text ta="center" bg="black" size="xl" c="white" p={5}>
               🚧 The website is under construction. Please report any issues. 🚧
             </Text>
-          </Flex>
+          </Flex> */}
 
           {/*================= Big Screen =================*/}
           <Container size="xl" className={classes.inner} visibleFrom='sm'>
