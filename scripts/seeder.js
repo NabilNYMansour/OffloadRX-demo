@@ -8,26 +8,26 @@ const { exit } = require('process');
 
 function randomCityInOntario() {
   const cities = [
-      "Toronto",
-      "Ottawa",
-      "Mississauga",
-      "Brampton",
-      "Hamilton",
-      "London",
-      "Markham",
-      "Vaughan",
-      "Kitchener",
-      "Windsor",
-      "Richmond Hill",
-      "Oakville",
-      "Burlington",
-      "Greater Sudbury",
-      "Oshawa",
-      "Barrie",
-      "St. Catharines",
-      "Guelph",
-      "Cambridge",
-      "Whitby"
+    "Toronto",
+    "Ottawa",
+    "Mississauga",
+    "Brampton",
+    "Hamilton",
+    "London",
+    "Markham",
+    "Vaughan",
+    "Kitchener",
+    "Windsor",
+    "Richmond Hill",
+    "Oakville",
+    "Burlington",
+    "Greater Sudbury",
+    "Oshawa",
+    "Barrie",
+    "St. Catharines",
+    "Guelph",
+    "Cambridge",
+    "Whitby"
   ];
   const randomIndex = Math.floor(Math.random() * cities.length);
   return cities[randomIndex];
@@ -45,13 +45,13 @@ function randomCapitalString(length) { // Capitalized only
   return result;
 }
 
-console.log("\n============== Migrator ==============");
+console.log("\n============== Seeder ==============");
 
-console.log("migrator> Creating db connection");
+console.log("seeder> Creating db connection");
 const betterSqlite = new Database('.sqlite.db');
 const db = drizzle(betterSqlite);
 
-console.log("migrator> Creating table object");
+console.log("seeder> Creating table object");
 const medicineTable = sqliteTable('medicine', {
   id: integer('id').primaryKey(),
 
@@ -77,7 +77,7 @@ const medicineTable = sqliteTable('medicine', {
   slug: text('slug').notNull(), // Slug
 });
 
-console.log("migrator> started reading");
+console.log("seeder> started reading");
 let index = 0;
 const total = 11825;
 fs.createReadStream("./data/Medicine_Details.csv")
@@ -101,11 +101,11 @@ fs.createReadStream("./data/Medicine_Details.csv")
     const email = faker.internet.email();
 
     const datePosted = faker.date.past({ years: 1 });
-    
+
     const expiry = faker.date.future({ years: 3 });
     const lotNumber = "LOT#" + faker.location.zipCode("#####");
-    
-      const description = faker.lorem.paragraph({ max: 7, min: 3 });
+
+    const description = faker.lorem.paragraph({ max: 7, min: 3 });
     const slug = crypto.randomUUID().replace(/-/g, '');
 
     const medicine = {
@@ -115,18 +115,18 @@ fs.createReadStream("./data/Medicine_Details.csv")
       imgUrl,
       price,
       forSale,
-      
+
       city,
       street,
       postal,
       phoneNumber,
       email,
-      
+
       datePosted,
-      
+
       expiry,
       lotNumber,
-      
+
       description,
       slug,
     };
@@ -134,12 +134,12 @@ fs.createReadStream("./data/Medicine_Details.csv")
     // console.log(medicine);
     // exit();
 
-    process.stdout.write(`migrator> done ${(index * 100 / total).toFixed(2)}%\r`);
+    process.stdout.write(`seeder> done ${(index * 100 / total).toFixed(2)}%\r`);
     await db.insert(medicineTable).values(medicine);
     index++;
   }).on("end", function () {
-    console.log("migrator> finished reading");
+    console.log("seeder> finished reading");
   }).on("error", function (error) {
-    console.log("migrator> error reading");
+    console.log("seeder> error reading");
     console.log(error.message);
   });
