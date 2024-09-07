@@ -1,1 +1,1 @@
-export const MAIN_URL = "https://Offloadrx.ca"
+export const MAIN_URL = "https://offloadrx.nabilmansour.com"
